@@ -19,24 +19,34 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Label Text="Data: " HorizontalOptions="End" VerticalOptions="Center"/>
-                <DatePicker MinimumDate="01/01/2022" MaximumDate="12/31/2030" Date="02/17/2025" 
-                            Grid.Column="1" HorizontalOptions="Start" />
+                <DatePicker Grid.Column="1" />
                 <Label Text="Categoria: " HorizontalOptions="End" VerticalOptions="Center"
                        Grid.Row="1" />
                 <Picker x:Name="pickerCategory" Grid.Row="1" Grid.Column="1" />
                 <Button
-                x:Name="btnAddCategory"
                 Text="Adicionar categoria" 
                 Clicked="OnAddCategoryClicked"
                 HorizontalOptions="Fill" 
                 Grid.Row="1" Grid.Column="2" />
+                <Label Text="Valor: " HorizontalOptions="End" VerticalOptions="Center"
+                       Grid.Row="2" />
+                <Entry x:Name="entryValue" Placeholder="0,00"
+                       Grid.Row="2" Grid.Column="1" />
+                <Label Text="Descrição: " HorizontalOptions="End" VerticalOptions="Center"
+                       Grid.Row="3" />
+                <Entry x:Name="entryDescription" Grid.Row="3" Grid.Column="1" />
+                <Button 
+                    Text="Gravar Lançamento"
+                    HorizontalOptions="FillAndExpand"
+                    Grid.Row="4" Grid.Column="1"/>
             </Grid>
 
 
