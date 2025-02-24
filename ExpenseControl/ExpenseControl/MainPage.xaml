@@ -13,7 +13,7 @@
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
-            <Grid>
+            <Grid HorizontalOptions="Center" RowSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -27,7 +27,8 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Label Text="Data: " HorizontalOptions="End" VerticalOptions="Center"/>
-                <DatePicker Grid.Column="1" />
+                <DatePicker x:Name="datePicker"
+                    Grid.Column="1" />
                 <Label Text="Categoria: " HorizontalOptions="End" VerticalOptions="Center"
                        Grid.Row="1" />
                 <Picker x:Name="pickerCategory" Grid.Row="1" Grid.Column="1" />
@@ -45,9 +46,12 @@
                 <Entry x:Name="entryDescription" Grid.Row="3" Grid.Column="1" />
                 <Button 
                     Text="Gravar Lançamento"
+                    Clicked="OnRecordDataClicked"
                     HorizontalOptions="FillAndExpand"
                     Grid.Row="4" Grid.Column="1"/>
             </Grid>
+            <Label x:Name="labelResume"
+                   Text="Texto resumo do lançamento" />
 
 
         </VerticalStackLayout>

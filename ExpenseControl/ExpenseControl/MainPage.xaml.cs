@@ -1,5 +1,7 @@
-﻿namespace ExpenseControl {
-    public partial class MainPage : ContentPage {
+﻿namespace ExpenseControl
+{
+    public partial class MainPage : ContentPage
+    {
 
         List<ExpenseCategory> categories =
             [
@@ -8,7 +10,8 @@
                 new ExpenseCategory("Lanches")
             ];
 
-        public MainPage() {
+        public MainPage()
+        {
             InitializeComponent();
             LoadPickerCategory();
 
@@ -32,10 +35,30 @@
             }
         }*/
 
-        private async void OnAddCategoryClicked(object sender, EventArgs e) {
+        private async void OnAddCategoryClicked(object sender, EventArgs e)
+        {
             string newCategory = await DisplayPromptAsync("Adicionar categoria", "Digite a nova categoria.", "Adicionar", "Cancelar");
+            foreach (ExpenseCategory category in categories)
+            {
+                if (category.Name == newCategory)
+                {
+                    await DisplayAlert("Categoria já cadastrada!", "Nome de categoria já cadastrada.", "OK");
+                    return;
+                }
+            }
             categories.Add(new ExpenseCategory(newCategory));
             LoadPickerCategory();
+            await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
+        }
+
+        private void OnRecordDataClicked(object sender, EventArgs e)
+        {
+            string date = datePicker.Date.ToShortDateString();
+            int selectedCategory = pickerCategory.SelectedIndex;
+            string category = categories[selectedCategory].Name;
+            string value = entryValue.Text;
+            string description = entryDescription.Text;
+            labelResume.Text = "Lançamento: " + date + " gastos com " + category + " no valor de R$" + value + " (" + description + ")";
         }
     }
 }
