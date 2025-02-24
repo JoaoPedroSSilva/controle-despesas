@@ -26,7 +26,16 @@
                 </Grid.ColumnDefinitions>
                 <Label Text="Data: " HorizontalOptions="End" VerticalOptions="Center"/>
                 <DatePicker MinimumDate="01/01/2022" MaximumDate="12/31/2030" Date="02/17/2025" 
-                            Grid.Column="1" HorizontalOptions="Start"/>
+                            Grid.Column="1" HorizontalOptions="Start" />
+                <Label Text="Categoria: " HorizontalOptions="End" VerticalOptions="Center"
+                       Grid.Row="1" />
+                <Picker x:Name="pickerCategory" Grid.Row="1" Grid.Column="1" 
+                        Title="Selecione a categoria" SelectedIndexChanged="OnPickerSelectedIndexChanged"
+                        ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" 
+                        SelectedItem="{Binding SelectedCategory}" />
+                <Label x:Name="CategoryNameLabel" Text="{Binding SelectedCategory.Name}" 
+                       Grid.Row="1" Grid.Column="2" /> 
+
                 <Button
                 x:Name="CounterBtn"
                 Text="Click me" 
