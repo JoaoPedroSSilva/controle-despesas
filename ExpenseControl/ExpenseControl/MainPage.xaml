@@ -40,15 +40,18 @@
                 <Label Text="Valor: " HorizontalOptions="End" VerticalOptions="Center"
                        Grid.Row="2" />
                 <Entry x:Name="entryValue" Placeholder="0,00"
+                       MaxLength="12" TextChanged="OnEntryValueTextChanged"
                        Grid.Row="2" Grid.Column="1" />
                 <Label Text="Descrição: " HorizontalOptions="End" VerticalOptions="Center"
                        Grid.Row="3" />
-                <Entry x:Name="entryDescription" Grid.Row="3" Grid.Column="1" />
+                <Entry x:Name="entryDescription" MaxLength="100"
+                       Keyboard="Numeric" 
+                       Grid.Row="3" Grid.Column="1" />
                 <Button 
                     Text="Gravar Lançamento"
                     Clicked="OnRecordDataClicked"
                     HorizontalOptions="FillAndExpand"
-                    Grid.Row="4" Grid.Column="1"/>
+                    Grid.Row="4" Grid.Column="1" />
             </Grid>
             <Label x:Name="labelResume"
                    Text="Texto resumo do lançamento" />

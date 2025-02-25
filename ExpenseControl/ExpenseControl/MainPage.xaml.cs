@@ -1,4 +1,6 @@
-﻿namespace ExpenseControl
+﻿using System.Text;
+
+namespace ExpenseControl
 {
     public partial class MainPage : ContentPage
     {
@@ -51,6 +53,19 @@
             await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
         }
 
+        private void OnEntryValueTextChanged(object sender, EventArgs e)
+        {
+            var value = new StringBuilder();
+            foreach (var c in entryValue.Text)
+            {
+                if (".,0123456789".Contains(c))
+                {
+                    value.Append(c);
+                }
+            }
+            entryValue.Text = value.ToString();
+        }
+
         private void OnRecordDataClicked(object sender, EventArgs e)
         {
             string date = datePicker.Date.ToShortDateString();
@@ -58,7 +73,7 @@
             string category = categories[selectedCategory].Name;
             string value = entryValue.Text;
             string description = entryDescription.Text;
-            labelResume.Text = "Lançamento: " + date + " gastos com " + category + " no valor de R$" + value + " (" + description + ")";
+            labelResume.Text = "Data: " + date + "; Categoria: " + category + "; Valor: R$" + value + "; (" + description + ")";
         }
     }
 }
