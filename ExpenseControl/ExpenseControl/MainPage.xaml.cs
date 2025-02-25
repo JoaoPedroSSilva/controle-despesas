@@ -25,17 +25,6 @@ namespace ExpenseControl
             pickerCategory.ItemDisplayBinding = new Binding("Name");
         }
 
-        /*
-        private void OnPickerSelectedIndexChanged(object sender, EventArgs e) {
-            var picker = (Picker)sender;
-            int selectedIndex = picker.SelectedIndex;
-
-            DisplayAlert("Alert", "Index selected: " + selectedIndex, "OK");
-
-            if (selectedIndex != -1) {
-                CategoryNameLabel.Text = picker.Items[selectedIndex];
-            }
-        }*/
 
         private async void OnAddCategoryClicked(object sender, EventArgs e)
         {
@@ -66,14 +55,32 @@ namespace ExpenseControl
             entryValue.Text = value.ToString();
         }
 
-        private void OnRecordDataClicked(object sender, EventArgs e)
+        private async void OnRecordDataClicked(object sender, EventArgs e)
         {
             string date = datePicker.Date.ToShortDateString();
             int selectedCategory = pickerCategory.SelectedIndex;
-            string category = categories[selectedCategory].Name;
-            string value = entryValue.Text;
+            string? category = selectedCategory == -1 ? null : categories[selectedCategory].Name;
+            string? value = entryValue.Text;
             string description = entryDescription.Text;
-            labelResume.Text = "Data: " + date + "; Categoria: " + category + "; Valor: R$" + value + "; (" + description + ")";
+
+            if (string.IsNullOrEmpty(category))
+            {
+                await DisplayAlert("Categoria inválida!", "Favor selecione uma categoria válida.", "OK");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                await DisplayAlert("Valor inválido!", "Favor digite um valor válido.", "OK");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                await DisplayAlert("Descrição inválida!", "Favor digite uma descrição.", "OK");
+                return;
+            }
+
+            labelResume.Text = "Data: " + date + "; Categoria: "
+                    + category + "; Valor: R$" + value + "; (" + description + ")";
         }
     }
 }
