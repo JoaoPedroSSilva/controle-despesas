@@ -16,7 +16,6 @@ namespace ExpenseControl
         {
             InitializeComponent();
             LoadPickerCategory();
-
         }
 
         private void LoadPickerCategory()
