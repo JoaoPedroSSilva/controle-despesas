@@ -88,6 +88,7 @@ namespace ExpenseControl
             }
 
             double value = double.Parse(stringValue);
+            
             labelResume.Text = "Data: " + date + "; Categoria: "
                     + category + "; Valor: R$" + value.ToString("F2") + "; (" + description + ")";
 

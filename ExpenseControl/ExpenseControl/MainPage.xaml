@@ -28,7 +28,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Text="Data: " VerticalOptions="Center"/>
@@ -38,9 +38,9 @@
                        Grid.Row="1" />
                 <Picker x:Name="pickerCategory" Grid.Row="1" Grid.Column="1" />
                 <Button
-                Text="Adicionar Categoria" 
+                Text="+" 
                 Clicked="OnAddCategoryClicked"
-                HorizontalOptions="Fill" 
+                HorizontalOptions="Start" 
                 Grid.Row="1" Grid.Column="2" />
                 <Label Text="Valor: " VerticalOptions="Center"
                        Grid.Row="2" />
