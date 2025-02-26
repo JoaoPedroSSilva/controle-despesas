@@ -68,7 +68,7 @@ namespace ExpenseControl
             string date = datePicker.Date.ToShortDateString();
             int selectedCategory = pickerCategory.SelectedIndex;
             string? category = selectedCategory == -1 ? null : categories[selectedCategory].Name;
-            string? value = entryValue.Text;
+            string? stringValue = entryValue.Text;
             string? description = entryDescription.Text;
 
             if (string.IsNullOrEmpty(category))
@@ -76,7 +76,7 @@ namespace ExpenseControl
                 await DisplayAlert("Categoria inválida!", "Favor selecione uma categoria válida.", "OK");
                 return;
             }
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(stringValue))
             {
                 await DisplayAlert("Valor inválido!", "Favor digite um valor válido.", "OK");
                 return;
@@ -87,8 +87,9 @@ namespace ExpenseControl
                 return;
             }
 
+            double value = double.Parse(stringValue);
             labelResume.Text = "Data: " + date + "; Categoria: "
-                    + category + "; Valor: R$" + value + "; (" + description + ")";
+                    + category + "; Valor: R$" + value.ToString("F2") + "; (" + description + ")";
 
             entryValue.Text = "";
             entryDescription.Text = "";
