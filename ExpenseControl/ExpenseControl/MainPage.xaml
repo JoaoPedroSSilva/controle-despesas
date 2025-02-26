@@ -12,8 +12,13 @@
                 Text="Controle de Despesas"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
+            <Label 
+                Text="Lançamento de despesa" Padding="10"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                />
 
-            <Grid HorizontalOptions="Center" RowSpacing="10">
+            <Grid RowSpacing="5">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -22,41 +27,40 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Text="Data: " HorizontalOptions="End" VerticalOptions="Center"/>
-                <DatePicker x:Name="datePicker"
+                <Label Text="Data: " VerticalOptions="Center"/>
+                <DatePicker x:Name="datePicker" 
                     Grid.Column="1" />
-                <Label Text="Categoria: " HorizontalOptions="End" VerticalOptions="Center"
+                <Label Text="Categoria: " VerticalOptions="Center"
                        Grid.Row="1" />
                 <Picker x:Name="pickerCategory" Grid.Row="1" Grid.Column="1" />
                 <Button
-                Text="Adicionar categoria" 
+                Text="Adicionar Categoria" 
                 Clicked="OnAddCategoryClicked"
                 HorizontalOptions="Fill" 
                 Grid.Row="1" Grid.Column="2" />
-                <Label Text="Valor: " HorizontalOptions="End" VerticalOptions="Center"
+                <Label Text="Valor: " VerticalOptions="Center"
                        Grid.Row="2" />
                 <Entry x:Name="entryValue" Placeholder="0,00"
                        MaxLength="12" TextChanged="OnEntryValueTextChanged"
+                       Keyboard="Numeric"
                        Grid.Row="2" Grid.Column="1" />
-                <Label Text="Descrição: " HorizontalOptions="End" VerticalOptions="Center"
+                <Label Text="Descrição: " VerticalOptions="Center"
                        Grid.Row="3" />
                 <Entry x:Name="entryDescription" MaxLength="100"
-                       Keyboard="Numeric" 
+                       Keyboard="Text" 
                        Grid.Row="3" Grid.Column="1" />
                 <Button 
                     Text="Gravar Lançamento"
                     Clicked="OnRecordDataClicked"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
                     Grid.Row="4" Grid.Column="1" />
             </Grid>
             <Label x:Name="labelResume"
                    Text="Texto resumo do lançamento" />
-
-
         </VerticalStackLayout>
     </ScrollView>
 

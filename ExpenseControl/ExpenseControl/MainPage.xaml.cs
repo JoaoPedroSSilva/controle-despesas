@@ -20,6 +20,13 @@ namespace ExpenseControl
 
         private void LoadPickerCategory()
         {
+            categories.Sort(delegate (ExpenseCategory x, ExpenseCategory y)
+            {
+                if (x.Name == null && y.Name == null) return 0;
+                else if (x.Name == null) return -1;
+                else if (y.Name == null) return 1;
+                else return x.Name.CompareTo(y.Name);
+            });
             pickerCategory.ItemsSource = categories;
             pickerCategory.ItemDisplayBinding = new Binding("Name");
         }
@@ -28,6 +35,8 @@ namespace ExpenseControl
         private async void OnAddCategoryClicked(object sender, EventArgs e)
         {
             string newCategory = await DisplayPromptAsync("Adicionar categoria", "Digite a nova categoria.", "Adicionar", "Cancelar");
+            if (string.IsNullOrWhiteSpace(newCategory))
+                return;
             foreach (ExpenseCategory category in categories)
             {
                 if (category.Name == newCategory)
@@ -60,7 +69,7 @@ namespace ExpenseControl
             int selectedCategory = pickerCategory.SelectedIndex;
             string? category = selectedCategory == -1 ? null : categories[selectedCategory].Name;
             string? value = entryValue.Text;
-            string description = entryDescription.Text;
+            string? description = entryDescription.Text;
 
             if (string.IsNullOrEmpty(category))
             {
@@ -80,6 +89,9 @@ namespace ExpenseControl
 
             labelResume.Text = "Data: " + date + "; Categoria: "
                     + category + "; Valor: R$" + value + "; (" + description + ")";
+
+            entryValue.Text = "";
+            entryDescription.Text = "";
         }
     }
 }
