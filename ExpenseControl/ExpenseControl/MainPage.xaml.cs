@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 
 namespace ExpenseControl
 {
@@ -11,6 +12,9 @@ namespace ExpenseControl
                 new ExpenseCategory("Gasolina"),
                 new ExpenseCategory("Lanches")
             ];
+
+        
+        List<ExpenseEntry> expensesList = LoadExpensesFromJson("C:\\Users\\jp_sa\\Downloads\\User Expenses.json");
 
         public MainPage()
         {
@@ -93,19 +97,42 @@ namespace ExpenseControl
             try
             {
                 value = double.Parse(stringValue);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 await DisplayAlert("Valor inválido!", "Favor digite um valor válido.", "OK");
                 return;
             }
 
             ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory, value, description);
-            // RecordExpenseEntry();
-            
-            labelResume.Text = expense.ToString();
+            expensesList.Add(expense);
+            string fileName = "C:\\Users\\jp_sa\\Downloads\\User Expenses.json";
+
+            SaveExpensesToJson(expensesList, fileName);
 
             entryValue.Text = "";
             entryDescription.Text = "";
+
+            expensesListView.ItemsSource = expensesList;
+        }
+
+        private static void SaveExpensesToJson(List<ExpenseEntry> expenses, string fileName)
+        {
+            var serializedData = JsonSerializer.Serialize(expenses);
+            File.WriteAllText(fileName, serializedData);
+        }
+
+        private static List<ExpenseEntry> LoadExpensesFromJson(string fileName)
+        {
+            try
+            {
+                var rawData = File.ReadAllText(fileName);
+                return JsonSerializer.Deserialize<List<ExpenseEntry>>(rawData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro: " + ex);
+            }
         }
     }
 }

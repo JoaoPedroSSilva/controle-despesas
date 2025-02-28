@@ -4,10 +4,11 @@
     {
         public int Id { get; private set; }
         public DateTime DateEntry { get; private set; }
-        public DateTime Date { get; set; }
-        public ExpenseCategory Category { get; set; }
-        public double Value { get; set; }
-        public string Description { get; set; }
+        public DateTime Date { get; private set; }
+        public ExpenseCategory Category { get; private set; }
+        public double Value { get; private set; }
+        public string Description { get; private set; }
+        public string Resume { get; private set; }
 
         private static int LastId = 0; 
 
@@ -21,6 +22,7 @@
             Category = category ?? throw new ArgumentNullException(nameof(category));
             Value = value;
             Description = description ?? throw new ArgumentNullException(nameof(description));
+            Resume = ToString();
         }
 
         public static int GetLastId()

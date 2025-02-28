@@ -4,7 +4,7 @@
              x:Class="ExpenseControl.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
+        <VerticalStackLayout BindingContext="ExpenseControl"
             Padding="30,0"
             Spacing="25">
 
@@ -59,8 +59,26 @@
                     HorizontalOptions="Fill"
                     Grid.Row="4" Grid.Column="1" />
             </Grid>
-            <Label x:Name="labelResume"
-                   Text="Texto resumo do lançamento" />
+
+            <Border Stroke="LightGray"
+                StrokeThickness="4"
+                StrokeShape="RoundRectangle 40,0,0,40"
+                Padding="16,8"
+                HorizontalOptions="Start">
+
+                <ListView x:Name="expensesListView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10" ColumnDefinitions="Auto" RowDefinitions="Auto">
+                                    <Label 
+                                    Text="{Binding Resume}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 
