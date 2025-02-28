@@ -69,11 +69,11 @@ namespace ExpenseControl
             string dateString = entryDate.ToShortDateString();
             int selectedCategory = pickerCategory.SelectedIndex;
             ExpenseCategory entryCategory = categories[selectedCategory];
-            string? categoryString = selectedCategory == -1 ? null : entryCategory.Name;
+            string? stringCategory = selectedCategory == -1 ? null : entryCategory.Name;
             string? stringValue = entryValue.Text;
             string? description = entryDescription.Text;
 
-            if (string.IsNullOrEmpty(categoryString))
+            if (string.IsNullOrEmpty(stringCategory))
             {
                 await DisplayAlert("Categoria inválida!", "Favor selecione uma categoria válida.", "OK");
                 return;
@@ -102,8 +102,7 @@ namespace ExpenseControl
             ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory, value, description);
             // RecordExpenseEntry();
             
-            labelResume.Text = "Data: " + dateString + "; Categoria: "
-                    + entryCategory + "; Valor: R$" + value.ToString("F2") + "; (" + description + ")";
+            labelResume.Text = expense.ToString();
 
             entryValue.Text = "";
             entryDescription.Text = "";
