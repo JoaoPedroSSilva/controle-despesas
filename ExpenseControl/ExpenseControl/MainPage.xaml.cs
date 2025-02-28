@@ -65,13 +65,15 @@ namespace ExpenseControl
 
         private async void OnRecordDataClicked(object sender, EventArgs e)
         {
-            string date = datePicker.Date.ToShortDateString();
+            DateTime entryDate = datePicker.Date;
+            string dateString = entryDate.ToShortDateString();
             int selectedCategory = pickerCategory.SelectedIndex;
-            string? category = selectedCategory == -1 ? null : categories[selectedCategory].Name;
+            ExpenseCategory entryCategory = categories[selectedCategory];
+            string? categoryString = selectedCategory == -1 ? null : entryCategory.Name;
             string? stringValue = entryValue.Text;
             string? description = entryDescription.Text;
 
-            if (string.IsNullOrEmpty(category))
+            if (string.IsNullOrEmpty(categoryString))
             {
                 await DisplayAlert("Categoria inválida!", "Favor selecione uma categoria válida.", "OK");
                 return;
@@ -87,10 +89,21 @@ namespace ExpenseControl
                 return;
             }
 
-            double value = double.Parse(stringValue);
+            double value;
+            try
+            {
+                value = double.Parse(stringValue);
+            } catch (Exception)
+            {
+                await DisplayAlert("Valor inválido!", "Favor digite um valor válido.", "OK");
+                return;
+            }
+
+            ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory, value, description);
+            // RecordExpenseEntry();
             
-            labelResume.Text = "Data: " + date + "; Categoria: "
-                    + category + "; Valor: R$" + value.ToString("F2") + "; (" + description + ")";
+            labelResume.Text = "Data: " + dateString + "; Categoria: "
+                    + entryCategory + "; Valor: R$" + value.ToString("F2") + "; (" + description + ")";
 
             entryValue.Text = "";
             entryDescription.Text = "";
