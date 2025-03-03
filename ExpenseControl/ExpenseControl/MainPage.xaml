@@ -5,15 +5,15 @@
 
     <ScrollView>
         <VerticalStackLayout BindingContext="ExpenseControl"
-            Padding="30,0"
-            Spacing="25">
+            Padding="15,0"
+            Spacing="10">
 
             <Label
                 Text="Controle de Despesas"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
             <Label 
-                Text="Lançamento de despesa" Padding="10"
+                Text="Lançamento de despesa"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 />
@@ -70,10 +70,10 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Padding="10" ColumnDefinitions="Auto" RowDefinitions="Auto">
+                                <HorizontalStackLayout Padding="10" >
                                     <Label 
                                     Text="{Binding Resume}" />
-                                </Grid>
+                                </HorizontalStackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

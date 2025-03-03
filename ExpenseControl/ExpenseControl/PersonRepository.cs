@@ -39,12 +39,12 @@ namespace ExpenseControl
 
                 result = conn.Insert(expense);
 
-                StatusMessage = string.Format("{0} reord(s) added (Expense: {1}",
+                StatusMessage = string.Format("{0} lançamento gravado (Despesa: {1})",
                     result, expense.Description);
             }
             catch (Exception ex)
             {
-                StatusMessage = string.Format("Failed to add {0}. Error: {1}",
+                StatusMessage = string.Format("Falha ao adicidionar {0}. Erro: {1}",
                     expense.Description, ex.Message);
             }
         }
