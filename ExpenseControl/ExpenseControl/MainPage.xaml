@@ -79,6 +79,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Border>
+            <Label x:Name="statusMessage" />
         </VerticalStackLayout>
     </ScrollView>
 

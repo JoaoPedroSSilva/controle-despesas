@@ -18,6 +18,9 @@ namespace ExpenseControl
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            string dbPath = FileAcessHelper.GetLocalFilePath("expenses.db3");
+            builder.Services.AddSingleton<PersonRepository>(s => 
+                ActivatorUtilities.CreateInstance<PersonRepository>(s, dbPath));
 
             return builder.Build();
         }

@@ -1,10 +1,15 @@
 ﻿using System.Text;
 using System.Text.Json;
+using ExpenseControl.Models;
+using SQLite;
 
 namespace ExpenseControl
 {
     public partial class MainPage : ContentPage
     {
+        private string _dbPath;
+        private SQLiteConnection conn;
+        public string StatusMessage;
 
         List<ExpenseCategory> categories =
             [
@@ -12,9 +17,7 @@ namespace ExpenseControl
                 new ExpenseCategory("Gasolina"),
                 new ExpenseCategory("Lanches")
             ];
-
         
-        List<ExpenseEntry> expensesList = LoadExpensesFromJson("C:\\Users\\jp_sa\\Downloads\\User Expenses.json");
 
         public MainPage()
         {
@@ -69,6 +72,8 @@ namespace ExpenseControl
 
         private async void OnRecordDataClicked(object sender, EventArgs e)
         {
+            statusMessage.Text = "";
+
             DateTime entryDate = datePicker.Date;
             string dateString = entryDate.ToShortDateString();
             int selectedCategory = pickerCategory.SelectedIndex;
@@ -104,35 +109,15 @@ namespace ExpenseControl
                 return;
             }
 
-            ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory, value, description);
-            expensesList.Add(expense);
-            string fileName = "C:\\Users\\jp_sa\\Downloads\\User Expenses.json";
-
-            SaveExpensesToJson(expensesList, fileName);
+            ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory.Name, value, description);
+            App.PersonRepo.AddNewExpense(expense);
+            statusMessage.Text = App.PersonRepo.StatusMessage;
 
             entryValue.Text = "";
             entryDescription.Text = "";
 
+            List<ExpenseEntry> expensesList = App.PersonRepo.GetAllExpenses();
             expensesListView.ItemsSource = expensesList;
-        }
-
-        private static void SaveExpensesToJson(List<ExpenseEntry> expenses, string fileName)
-        {
-            var serializedData = JsonSerializer.Serialize(expenses);
-            File.WriteAllText(fileName, serializedData);
-        }
-
-        private static List<ExpenseEntry> LoadExpensesFromJson(string fileName)
-        {
-            try
-            {
-                var rawData = File.ReadAllText(fileName);
-                return JsonSerializer.Deserialize<List<ExpenseEntry>>(rawData);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro: " + ex);
-            }
         }
     }
 }

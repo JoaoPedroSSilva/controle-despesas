@@ -2,10 +2,11 @@
 {
     public partial class App : Application
     {
-        public App()
+        public static PersonRepository PersonRepo {  get; private set; }
+        public App(PersonRepository repo)
         {
             InitializeComponent();
-
+            PersonRepo = repo;
             MainPage = new AppShell();
         }
     }
