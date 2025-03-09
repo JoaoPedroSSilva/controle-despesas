@@ -61,19 +61,27 @@
             </Grid>
 
             <Border Stroke="LightGray"
-                StrokeThickness="4"
-                StrokeShape="RoundRectangle 40,0,0,40"
-                Padding="16,8"
-                HorizontalOptions="Start">
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 40,0,0,0"
+                Padding="15"
+                HorizontalOptions="Start" >
 
                 <ListView x:Name="expensesListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <HorizontalStackLayout Padding="10" >
+                                <Grid ColumnDefinitions="10*, 1*">
                                     <Label 
-                                    Text="{Binding Resume}" />
-                                </HorizontalStackLayout>
+                                        Text="{Binding Resume}"
+                                        LineBreakMode="WordWrap" />
+                                    <Button 
+                                        Text="🗑" 
+                                        Grid.Column="1"
+                                        BorderWidth="1"
+                                        Clicked=""
+                                        BackgroundColor="Transparent"
+                                        Padding="0"/>
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

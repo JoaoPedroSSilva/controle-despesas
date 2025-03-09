@@ -63,5 +63,27 @@ namespace ExpenseControl
 
             return new List<ExpenseEntry>();
         }
+
+        public void RemoveExpense(ExpenseEntry expense)
+        {
+            int result = 0;
+            try
+            {
+                Init();
+
+                if (expense == null)
+                    throw new Exception("Valid expense required");
+
+                result = conn.Delete(expense.Id);
+
+                StatusMessage = string.Format("{0} lançamento removido (Despesa: {1})",
+                    result, expense.Description);
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Falha ao remover {0}. Erro: {1}",
+                    expense.Description, ex.Message);
+            }
+        }
     }
 }

@@ -119,5 +119,10 @@ namespace ExpenseControl
             List<ExpenseEntry> expensesList = App.PersonRepo.GetAllExpenses();
             expensesListView.ItemsSource = expensesList;
         }
+
+        private void OnRemoveExpenseClicked(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

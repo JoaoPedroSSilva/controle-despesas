@@ -29,10 +29,10 @@ public class ExpenseEntry
 
     public override string ToString()
     {
-        return "Data: " + Date.ToShortDateString() + "; Categoria: "
-                + Category + "; Valor: R$"
-                + Value.ToString("F2")
-                + "; (" + Description + ").";
+        return Date.ToShortDateString() + "; R$" + Value.ToString("F2")
+            + "; Categoria: "
+            + Category 
+            + "; (" + Description + ").";
     }
 }
 
