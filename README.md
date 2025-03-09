@@ -9,5 +9,9 @@ Aplicação com dotnet MAUI para registro de despesas pessoais com permanência 
 ## Tech Stack
 - **Aplicação**: .NET MAUI, C#, XAML, SQL, SQLite.
 
-## Como executar
+## Planejamentos Futuros
+- Melhorar a interface para outros dispositivos.
+- Incluir relatórios com análises gráficas das despesas por mês.
+- Criar documentação completa.
+- Incluir funcionalidades para exportação dos lançamentos em formatos diversos como .xlsx, .pdf, .txt, .json.
 
