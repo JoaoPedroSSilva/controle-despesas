@@ -1,4 +1,6 @@
-﻿namespace ExpenseControl
+﻿using ExpenseControl.Models;
+
+namespace ExpenseControl
 {
     public partial class App : Application
     {
