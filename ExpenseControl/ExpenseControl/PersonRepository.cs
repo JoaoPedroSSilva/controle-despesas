@@ -19,7 +19,6 @@ namespace ExpenseControl
             }
             conn = new SQLiteConnection(_dbPath);
             conn.CreateTable<ExpenseEntry>();
-
         }
 
         public PersonRepository(string dbPath)
@@ -58,7 +57,22 @@ namespace ExpenseControl
             }
             catch (Exception ex)
             {
-                StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
+                StatusMessage = string.Format("Falha ao recuperar dados. {0}", ex.Message);
+            }
+
+            return new List<ExpenseEntry>();
+        }
+
+        public List<ExpenseEntry> GetLastsExpenses(int limit)
+        {
+            try
+            {
+                Init();
+                return conn.Table<ExpenseEntry>().ToList();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Falha ao recuperar dados. {0}", ex.Message);
             }
 
             return new List<ExpenseEntry>();

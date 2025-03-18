@@ -78,7 +78,7 @@
                                         Text="🗑" 
                                         Grid.Column="1"
                                         BorderWidth="1"
-                                        Clicked=""
+                                        Clicked="OnRemoveExpenseClicked"
                                         BackgroundColor="Transparent"
                                         Padding="0"/>
                                 </Grid>

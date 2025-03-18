@@ -7,8 +7,6 @@ namespace ExpenseControl
 {
     public partial class MainPage : ContentPage
     {
-        private string _dbPath;
-        private SQLiteConnection conn;
         public string StatusMessage;
 
         List<ExpenseCategory> categories =
@@ -75,7 +73,6 @@ namespace ExpenseControl
             statusMessage.Text = "";
 
             DateTime entryDate = datePicker.Date;
-            string dateString = entryDate.ToShortDateString();
             int selectedCategory = pickerCategory.SelectedIndex;
             ExpenseCategory entryCategory = categories[selectedCategory];
             string? stringCategory = selectedCategory == -1 ? null : entryCategory.Name;
@@ -120,9 +117,9 @@ namespace ExpenseControl
             expensesListView.ItemsSource = expensesList;
         }
 
-        private void OnRemoveExpenseClicked(object sender, EventArgs e)
+        private async void OnRemoveExpenseClicked(object sender, EventArgs e)
         {
-            
+            await DisplayAlert("Lançamento Excluído", "Lançamento excluído com sucesso.", "OK");
         }
     }
 }
