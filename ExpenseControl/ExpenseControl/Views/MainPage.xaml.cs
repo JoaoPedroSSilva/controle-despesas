@@ -9,11 +9,11 @@ namespace ExpenseControl
     {
         public string StatusMessage;
 
-        List<ExpenseCategory> categories =
+        List<string> categories =
             [
-                new ExpenseCategory("Mercado"),
-                new ExpenseCategory("Gasolina"),
-                new ExpenseCategory("Lanches")
+                "Mercado",
+                "Gasolina",
+                "Lanches"
             ];
         
 
@@ -25,15 +25,14 @@ namespace ExpenseControl
 
         private void LoadPickerCategory()
         {
-            categories.Sort(delegate (ExpenseCategory x, ExpenseCategory y)
+            categories.Sort(delegate (string x, string y)
             {
-                if (x.Name == null && y.Name == null) return 0;
-                else if (x.Name == null) return -1;
-                else if (y.Name == null) return 1;
-                else return x.Name.CompareTo(y.Name);
+                if (x == null && y == null) return 0;
+                else if (x == null) return -1;
+                else if (y == null) return 1;
+                else return x.CompareTo(y);
             });
             pickerCategory.ItemsSource = categories;
-            pickerCategory.ItemDisplayBinding = new Binding("Name");
         }
 
 
@@ -42,15 +41,17 @@ namespace ExpenseControl
             string newCategory = await DisplayPromptAsync("Adicionar categoria", "Digite a nova categoria.", "Adicionar", "Cancelar");
             if (string.IsNullOrWhiteSpace(newCategory))
                 return;
-            foreach (ExpenseCategory category in categories)
+            newCategory = newCategory.Trim();
+
+            foreach (string category in categories)
             {
-                if (category.Name == newCategory)
+                if (category == newCategory)
                 {
                     await DisplayAlert("Categoria já cadastrada!", "Nome de categoria já cadastrada.", "OK");
                     return;
                 }
             }
-            categories.Add(new ExpenseCategory(newCategory));
+            categories.Add(newCategory);
             LoadPickerCategory();
             await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
         }
@@ -74,12 +75,11 @@ namespace ExpenseControl
 
             DateTime entryDate = datePicker.Date;
             int selectedCategory = pickerCategory.SelectedIndex;
-            ExpenseCategory entryCategory = categories[selectedCategory];
-            string? stringCategory = selectedCategory == -1 ? null : entryCategory.Name;
+            string entryCategory = categories[selectedCategory];
             string? stringValue = entryValue.Text;
             string? description = entryDescription.Text;
 
-            if (string.IsNullOrEmpty(stringCategory))
+            if (string.IsNullOrEmpty(entryCategory))
             {
                 await DisplayAlert("Categoria inválida!", "Favor selecione uma categoria válida.", "OK");
                 return;
@@ -106,7 +106,7 @@ namespace ExpenseControl
                 return;
             }
 
-            ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory.Name, value, description);
+            ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory, value, description);
             await App.PersonRepo.AddNewExpense(expense);
             statusMessage.Text = App.PersonRepo.StatusMessage;
 
