@@ -107,13 +107,14 @@ namespace ExpenseControl
             }
 
             ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory.Name, value, description);
-            App.PersonRepo.AddNewExpense(expense);
+            await App.PersonRepo.AddNewExpense(expense);
             statusMessage.Text = App.PersonRepo.StatusMessage;
 
             entryValue.Text = "";
             entryDescription.Text = "";
 
-            List<ExpenseEntry> expensesList = App.PersonRepo.GetAllExpenses();
+            int numberOfLastsExpenses = 4;
+            List<ExpenseEntry> expensesList = await App.PersonRepo.GetLastsExpenses(numberOfLastsExpenses);
             expensesListView.ItemsSource = expensesList;
         }
 

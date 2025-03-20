@@ -1,10 +1,10 @@
-﻿namespace ExpenseControl
+﻿namespace ExpenseControl.Models
 {
     public class FileAcessHelper
     {
         public static string GetLocalFilePath(string fileName)
         {
-            return System.IO.Path.Combine(FileSystem.AppDataDirectory, fileName);
+            return Path.Combine(FileSystem.AppDataDirectory, fileName);
         }
     }
 }

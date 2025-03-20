@@ -1,7 +1,6 @@
-﻿using ExpenseControl.Models;
-using SQLite;
+﻿using SQLite;
 
-namespace ExpenseControl
+namespace ExpenseControl.Models
 {
     public class PersonRepository
     {
@@ -9,16 +8,16 @@ namespace ExpenseControl
 
         public string StatusMessage { get; set; }
 
-        private SQLiteConnection conn;
+        private SQLiteAsyncConnection conn;
 
-        private void Init()
+        private async Task Init()
         {
             if (conn != null)
             {
                 return;
             }
-            conn = new SQLiteConnection(_dbPath);
-            conn.CreateTable<ExpenseEntry>();
+            conn = new SQLiteAsyncConnection(_dbPath);
+            await conn.CreateTableAsync<ExpenseEntry>();
         }
 
         public PersonRepository(string dbPath)
@@ -26,17 +25,17 @@ namespace ExpenseControl
             _dbPath = dbPath;
         }
 
-        public void AddNewExpense(ExpenseEntry expense)
+        public async Task AddNewExpense(ExpenseEntry expense)
         {
             int result = 0;
             try
             {
-                Init();
+                await Init();
 
                 if (expense == null)
                     throw new Exception("Valid expense required");
 
-                result = conn.Insert(expense);
+                result = await conn.InsertAsync(expense);
 
                 StatusMessage = string.Format("{0} lançamento gravado (Despesa: {1})",
                     result, expense.Description);
@@ -48,12 +47,29 @@ namespace ExpenseControl
             }
         }
 
-        public List<ExpenseEntry> GetAllExpenses()
+        public async Task<List<ExpenseEntry>> GetAllExpenses()
         {
             try
             {
-                Init();
-                return conn.Table<ExpenseEntry>().ToList();
+                await Init();
+                return await conn.Table<ExpenseEntry>().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Falha ao recuperar dados. {0}", ex.Message);
+            }
+
+            return new List<ExpenseEntry>();
+        } 
+
+        public async Task<List<ExpenseEntry>> GetLastsExpenses(int limit) 
+        {
+            try
+            {
+                await Init();
+                List<ExpenseEntry> lastsExpenses = await conn.QueryAsync<ExpenseEntry>(
+                    $"SELECT * FROM expenses ORDER BY id DESC LIMIT {limit}");
+                return lastsExpenses;
             }
             catch (Exception ex)
             {
@@ -63,22 +79,7 @@ namespace ExpenseControl
             return new List<ExpenseEntry>();
         }
 
-        public List<ExpenseEntry> GetLastsExpenses(int limit)
-        {
-            try
-            {
-                Init();
-                return conn.Table<ExpenseEntry>().ToList();
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = string.Format("Falha ao recuperar dados. {0}", ex.Message);
-            }
-
-            return new List<ExpenseEntry>();
-        }
-
-        public void RemoveExpense(ExpenseEntry expense)
+        /* public void RemoveExpense(ExpenseEntry expense)
         {
             int result = 0;
             try
@@ -98,6 +99,6 @@ namespace ExpenseControl
                 StatusMessage = string.Format("Falha ao remover {0}. Erro: {1}",
                     expense.Description, ex.Message);
             }
-        }
+        } */
     }
 }
