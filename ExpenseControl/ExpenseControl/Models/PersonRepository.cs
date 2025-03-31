@@ -79,6 +79,28 @@ namespace ExpenseControl.Models
             return new List<ExpenseEntry>();
         }
 
+        public async Task<List<string>> GetExpensesCategories()
+        {
+            try
+            {
+                await Init();
+                var categories = await conn.QueryAsync<ExpenseEntry>("SELECT DISTINCT Category FROM expenses");
+                return categories.Select(x => x.Category).ToList();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Falha ao recuperar dados. {0}", ex.Message);
+            }
+
+            return new List<string>() 
+            { 
+                "Mercado",
+                "Gasolina",
+                "Condomínio",
+                "Lanches" 
+            };
+        }
+
         /* public void RemoveExpense(ExpenseEntry expense)
         {
             int result = 0;

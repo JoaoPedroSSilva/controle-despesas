@@ -9,17 +9,19 @@ namespace ExpenseControl
     {
         public string StatusMessage;
 
-        List<string> categories =
-            [
-                "Mercado",
-                "Gasolina",
-                "Lanches"
-            ];
-        
+        List<string> categories;
+
 
         public MainPage()
         {
             InitializeComponent();
+            LoadCategories();
+            
+        }
+
+        private async void LoadCategories()
+        {
+            categories = await App.PersonRepo.GetExpensesCategories();
             LoadPickerCategory();
         }
 
@@ -52,8 +54,8 @@ namespace ExpenseControl
                 }
             }
             categories.Add(newCategory);
-            LoadPickerCategory();
             await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
+            LoadPickerCategory();
         }
 
         private void OnEntryValueTextChanged(object sender, EventArgs e)
