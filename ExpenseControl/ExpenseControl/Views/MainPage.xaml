@@ -57,6 +57,7 @@
                     Grid.Row="4" Grid.Column="1" />
             </Grid>
 
+            <Label x:Name="statusMessage" />
             <Border Stroke="LightGray"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 40,0,0,0"
@@ -84,7 +85,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Border>
-            <Label x:Name="statusMessage" />
         </VerticalStackLayout>
     </ScrollView>
 

@@ -37,8 +37,8 @@ namespace ExpenseControl.Models
 
                 result = await conn.InsertAsync(expense);
 
-                StatusMessage = string.Format("{0} lançamento gravado (Despesa: {1})",
-                    result, expense.Description);
+                StatusMessage = string.Format("Lançamento gravado (Despesa: {0})",
+                    expense.Description);
             }
             catch (Exception ex)
             {
