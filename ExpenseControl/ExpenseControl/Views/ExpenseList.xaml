@@ -3,10 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpenseControl.Views.ExpenseList"
              Title="ExpenseList">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label 
+                Text="Todos os lançamentos"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Border Stroke="LightGray"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 40,0,0,0"
+                Padding="15"
+                HorizontalOptions="Start" >
+
+                <ListView x:Name="expensesListView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid ColumnDefinitions="10*, 1*">
+                                    <Label 
+                                Text="{Binding Resume}"
+                                LineBreakMode="WordWrap" />
+                                    <Button 
+                                Text="🗑" 
+                                Grid.Column="1"
+                                BorderWidth="1"
+                                Clicked="OnRemoveExpenseClicked"
+                                BackgroundColor="Transparent"
+                                Padding="0"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
