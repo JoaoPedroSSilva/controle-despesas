@@ -1,7 +1,5 @@
 ﻿using System.Text;
-using System.Text.Json;
 using ExpenseControl.Models;
-using SQLite;
 
 namespace ExpenseControl
 {
@@ -16,7 +14,6 @@ namespace ExpenseControl
         {
             InitializeComponent();
             LoadCategories();
-            
         }
 
         private async void LoadCategories()
@@ -54,8 +51,11 @@ namespace ExpenseControl
                 }
             }
             categories.Add(newCategory);
+
+            pickerCategory.ItemsSource = null;
+            pickerCategory.ItemsSource = categories;
+
             await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
-            LoadPickerCategory();
         }
 
         private void OnEntryValueTextChanged(object sender, EventArgs e)
