@@ -4,12 +4,54 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ExpenseControl"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:view="clr-namespace:ExpenseControl.Views"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarIsVisible="False"
     Title="ExpenseControl">
 
-    <ShellContent
-        Title="Home"
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout>
+            <Image Source="dotnet_bot.png" WidthRequest="100"/>
+            <Label Text="Flyout Header" HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout>
+            <Image Source="dotnet_bot.png" WidthRequest="100"/>
+            <Label Text="Flyout Footer" HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions=".30*, .70*" RowDefinitions="*,*,*" RowSpacing="10" ColumnSpacing="10">
+                <HorizontalStackLayout Grid.Row="0" Spacing="10">
+                    <Image Source="{Binding FlyoutIcon}" WidthRequest="50" HeightRequest="50"/>
+                    <Label Text="{Binding Title}" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <FlyoutItem Title="Home" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+        Title="Cadastrar Despesas"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" 
+            Icon="dotnet_bot.png"/>
+
+        <ShellContent
+        Title="Listar Despesas"
+        ContentTemplate="{DataTemplate view:ExpenseList}"
+        Route="ExpenseList"
+            Icon="dotnet_bot.png"/>
+
+        <ShellContent
+        Title="Consolidar Despesas"
+        ContentTemplate="{DataTemplate view:ConsolidatedExpenses}"
+        Route="ConsolidatedExpenses"
+            Icon="dotnet_bot.png"/>
+    </FlyoutItem>
 
 </Shell>

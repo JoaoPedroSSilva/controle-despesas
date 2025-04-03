@@ -14,10 +14,6 @@
                 Text="Controle de Despesas"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
-            <Label 
-                Text="Lançamento de despesa"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2" />
 
             <Grid RowSpacing="5">
                 <Grid.RowDefinitions>
