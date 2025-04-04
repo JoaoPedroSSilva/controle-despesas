@@ -4,7 +4,6 @@ namespace ExpenseControl.Views;
 
 public partial class ExpenseList : ContentPage
 {
-    string TotalSpent;
 	public ExpenseList()
 	{
 		InitializeComponent();
@@ -17,7 +16,7 @@ public partial class ExpenseList : ContentPage
         int year = DateTime.Now.Year;
         List<ExpenseEntry> currentMonthExpenses = await App.PersonRepo.GetMonthExpenses(month, year);
 
-        TotalSpent = $"Total de gastos: {SumExpenses(currentMonthExpenses):C}";
+        labelTotalSpent.Text = $"Total de gastos: {SumExpenses(currentMonthExpenses):C}";
         expensesListView.ItemsSource = currentMonthExpenses;
     }
 

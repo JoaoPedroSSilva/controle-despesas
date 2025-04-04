@@ -4,13 +4,16 @@
              x:Class="ExpenseControl.Views.ExpenseList">
 
     <ScrollView>
-        <VerticalStackLayout BindingContext="ExpenseList">
+        <VerticalStackLayout
+            Padding="15,0"
+            Spacing="10"
+            BindingContext="ExpenseList">
             <Label 
                 Text="Consultar lançamentos"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
             <Label
-                Text="{Binding TotalSpent}" />
+                x:Name="labelTotalSpent" />
             <Border Stroke="LightGray"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 40,0,0,0"

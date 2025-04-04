@@ -5,8 +5,6 @@ namespace ExpenseControl
 {
     public partial class MainPage : ContentPage
     {
-        public string StatusMessage;
-
         List<string> categories;
 
 
