@@ -9,6 +9,7 @@ public class ExpenseEntry
     public int Id { get; set; }
     public DateTime DateEntry { get; set; }
     public DateTime Date { get; set; }
+    public string DateString { get; set; }
     public string Category { get; set; }
     public double Value { get; set; }
     public string Description { get; set; }
@@ -19,6 +20,7 @@ public class ExpenseEntry
     {
         DateEntry = DateTime.Now;
         Date = date;
+        DateString = date.ToString("yyyy-MM-dd");
         Category = category;
         Value = value;
         Description = description;

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ExpenseControl.Views.ExpenseList"
-             Title="ExpenseList">
+             x:Class="ExpenseControl.Views.ExpenseList">
+
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout BindingContext="ExpenseList">
             <Label 
-                Text="Todos os lançamentos"
+                Text="Consultar lançamentos"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
+            <Label
+                Text="{Binding TotalSpent}" />
             <Border Stroke="LightGray"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 40,0,0,0"
                 Padding="15"
                 HorizontalOptions="Start" >
-
                 <ListView x:Name="expensesListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>

@@ -79,6 +79,25 @@ namespace ExpenseControl.Models
             return new List<ExpenseEntry>();
         }
 
+        public async Task<List<ExpenseEntry>> GetMonthExpenses(int month, int year)
+        {
+            try
+            {
+                await Init();
+                string querryYear = year.ToString();
+                string querryMonth = month.ToString("D2");
+                string sqlQuerry = "SELECT * FROM expenses WHERE STRFTIME('%Y', DateString) = ? AND STRFTIME('%m', DateString) = ?";
+                List <ExpenseEntry> currentMonthExpenses = await conn.QueryAsync<ExpenseEntry>(sqlQuerry, querryYear, querryMonth);
+                return currentMonthExpenses;
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Falha ao recuperar dados. {0}", ex.Message);
+            }
+
+            return new List<ExpenseEntry>();
+        }
+
         public async Task<List<string>> GetExpensesCategories()
         {
             try
