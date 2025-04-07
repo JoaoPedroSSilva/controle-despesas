@@ -113,6 +113,11 @@ namespace ExpenseControl
             entryValue.Text = "";
             entryDescription.Text = "";
 
+            await RefreshLastsExpenses();
+        }
+
+        private async Task RefreshLastsExpenses()
+        {
             int numberOfLastsExpenses = 4;
             List<ExpenseEntry> expensesList = await App.PersonRepo.GetLastsExpenses(numberOfLastsExpenses);
             expensesListView.ItemsSource = expensesList;
@@ -120,6 +125,22 @@ namespace ExpenseControl
 
         private async void OnRemoveExpenseClicked(object sender, EventArgs e)
         {
+            var button = sender as Button;
+            if (button == null)
+                return;
+
+            var expense = button.BindingContext as ExpenseEntry;
+            if (expense == null)
+                return;
+
+            bool confirm = await DisplayAlert("Confirmação", "Deseja excluir esse lançamento?", "Sim", "Cancelar");
+            if (!confirm)
+                return;
+
+            await App.PersonRepo.DeleteExpense(expense.Id);
+
+            await RefreshLastsExpenses();
+
             await DisplayAlert("Lançamento Excluído", "Lançamento excluído com sucesso.", "OK");
         }
     }

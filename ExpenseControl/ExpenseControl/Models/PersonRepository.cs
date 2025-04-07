@@ -120,6 +120,20 @@ namespace ExpenseControl.Models
             };
         }
 
+        public async Task DeleteExpense(int id)
+        {
+            try
+            {
+                await Init();
+                await conn.ExecuteAsync("DELETE FROM expenses WHERE id = ?", id);
+                StatusMessage = "Lançamento excluído com sucesso.";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Erro ao exluir: {ex.Message}";
+            }
+        }
+
         /* public void RemoveExpense(ExpenseEntry expense)
         {
             int result = 0;
