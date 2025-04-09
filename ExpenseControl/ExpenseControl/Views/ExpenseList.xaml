@@ -19,7 +19,8 @@
                 StrokeShape="RoundRectangle 40,0,0,0"
                 Padding="15"
                 HorizontalOptions="Start" >
-                <ListView x:Name="expensesListView">
+                <ListView x:Name="expensesListView"
+                          IsPullToRefreshEnabled="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

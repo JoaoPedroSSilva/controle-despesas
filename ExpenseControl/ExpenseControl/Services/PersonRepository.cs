@@ -1,6 +1,7 @@
 ﻿using SQLite;
+using ExpenseControl.Models;
 
-namespace ExpenseControl.Models
+namespace ExpenseControl.Services
 {
     public class PersonRepository
     {
@@ -120,12 +121,12 @@ namespace ExpenseControl.Models
             };
         }
 
-        public async Task DeleteExpense(int id)
+        public async Task DeleteExpense(ExpenseEntry expense)
         {
             try
             {
                 await Init();
-                await conn.ExecuteAsync("DELETE FROM expenses WHERE id = ?", id);
+                await conn.ExecuteAsync("DELETE FROM expenses WHERE id = ?", expense.Id);
                 StatusMessage = "Lançamento excluído com sucesso.";
             }
             catch (Exception ex)

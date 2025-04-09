@@ -1,4 +1,5 @@
 using ExpenseControl.Models;
+using System.Windows.Input;
 
 namespace ExpenseControl.Views;
 
@@ -45,7 +46,7 @@ public partial class ExpenseList : ContentPage
         if (!confirm)
             return;
 
-        await App.PersonRepo.DeleteExpense(expense.Id);
+        await App.PersonRepo.DeleteExpense(expense);
 
         LoadExpenseList();
 

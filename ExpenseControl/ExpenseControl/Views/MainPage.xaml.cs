@@ -56,7 +56,7 @@ namespace ExpenseControl
             await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
         }
 
-        private void OnEntryValueTextChanged(object sender, EventArgs e)
+        /*private void OnEntryValueTextChanged(object sender, EventArgs e)
         {
             var value = new StringBuilder();
             foreach (var c in entryValue.Text)
@@ -71,7 +71,6 @@ namespace ExpenseControl
 
         private async void OnRecordDataClicked(object sender, EventArgs e)
         {
-            statusMessage.Text = "";
 
             DateTime entryDate = datePicker.Date;
             int selectedCategory = pickerCategory.SelectedIndex;
@@ -108,7 +107,6 @@ namespace ExpenseControl
 
             ExpenseEntry expense = new ExpenseEntry(entryDate, entryCategory, value, description);
             await App.PersonRepo.AddNewExpense(expense);
-            statusMessage.Text = App.PersonRepo.StatusMessage;
 
             entryValue.Text = "";
             entryDescription.Text = "";
@@ -142,6 +140,6 @@ namespace ExpenseControl
             await RefreshLastsExpenses();
 
             await DisplayAlert("Lançamento Excluído", "Lançamento excluído com sucesso.", "OK");
-        }
+        }*/
     }
 }
