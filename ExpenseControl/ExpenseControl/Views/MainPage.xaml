@@ -58,7 +58,7 @@
                        Grid.Row="3" Grid.Column="1" />
                 <Button 
                     Text="Gravar Lançamento"
-                    Command="{Binding RecordExpenseCommand}"
+                    Command="{Binding SaveExpenseCommand}"
                     HorizontalOptions="Fill"
                     Grid.Row="4" Grid.Column="1" />
             </Grid>

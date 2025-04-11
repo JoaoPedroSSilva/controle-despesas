@@ -40,7 +40,25 @@ namespace ExpenseControl.ViewModels
         [RelayCommand]
         private async Task AddCategory()
         {
+            /*string newCategory = await DisplayPromptAsync("Adicionar categoria", "Digite a nova categoria.", "Adicionar", "Cancelar");
+            if (string.IsNullOrWhiteSpace(newCategory))
+                return;
+            newCategory = newCategory.Trim();
 
+            foreach (string category in categories)
+            {
+                if (category == newCategory)
+                {
+                    await DisplayAlert("Categoria já cadastrada!", "Nome de categoria já cadastrada.", "OK");
+                    return;
+                }
+            }
+            categories.Add(newCategory);
+
+            pickerCategory.ItemsSource = null;
+            pickerCategory.ItemsSource = categories;
+
+            await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");*/
         }
 
         [RelayCommand]
