@@ -1,12 +1,69 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ExpenseControl.ViewModels"
+             xmlns:local="clr-namespace:ExpenseControl"
              x:Class="ExpenseControl.Views.ConsolidatedExpenses"
              Title="ConsolidatedExpenses">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <ContentPage.BindingContext>
+        <vm:ConsolidatedExpensesViewModel />
+    </ContentPage.BindingContext>
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <Label Text="Consolidação de Despesas"
+                   FontSize="24"
+                   HorizontalOptions="Center" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Picker Title="Ano"
+                        ItemsSource="{Binding AvailableYears}"
+                        SelectedItem="{Binding SelectedYear}" />
+
+
+                <Picker Title="Mês"
+                        ItemsSource="{Binding AvailableMonths}"
+                        SelectedItem="{Binding SelectedMonth}">
+                    <Picker.ItemDisplayBinding>
+                        <Binding StringFormat="{}{0:D2}" />
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+            </HorizontalStackLayout>
+
+            <CollectionView ItemsSource="{Binding ConsolidatedExpenses}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" Padding="10" CornerRadius="10">
+                            <Label Text="{Binding Display}" FontSize="16" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Despesas por categoria" FontSize="20" />
+
+            <VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding ChartData}" HeightRequest="300">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="1" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Label Text="{Binding Category}" VerticalOptions="Center" />
+                                <BoxView Color="SteelBlue"
+                                         HeightRequest="20"
+                                         WidthRequest="{Binding TotalValue}"
+                                         VerticalOptions="Center"/>
+                                <Label Text="{Binding TotalValue, StringFormat='R$ {0:N2}'}"
+                                       Grid.Column="1"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

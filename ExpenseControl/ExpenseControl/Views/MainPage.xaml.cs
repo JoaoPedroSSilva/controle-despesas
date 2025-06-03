@@ -11,10 +11,10 @@ namespace ExpenseControl
         public MainPage()
         {
             InitializeComponent();
-            LoadCategories();
+            // LoadCategories();
         }
 
-        private async void LoadCategories()
+        /*private async void LoadCategories()
         {
             categories = await App.PersonRepo.GetExpensesCategories();
             LoadPickerCategory();
@@ -56,7 +56,7 @@ namespace ExpenseControl
             await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
         }
 
-        /*private void OnEntryValueTextChanged(object sender, EventArgs e)
+        private void OnEntryValueTextChanged(object sender, EventArgs e)
         {
             var value = new StringBuilder();
             foreach (var c in entryValue.Text)

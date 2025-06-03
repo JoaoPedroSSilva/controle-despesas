@@ -5,20 +5,18 @@
              x:Class="ExpenseControl.MainPage">
 
     <ContentPage.BindingContext>
-        <vm:MainPageViewModel/>
+        <vm:MainPageViewModel />
     </ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout
             Padding="15,0"
             Spacing="10">
-
             <Label
                 Text="Controle de Despesas"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
-
-            <Grid RowSpacing="5">
+            <Grid RowSpacing="5" ColumnSpacing="5">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -31,27 +29,26 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Text="Data: " VerticalOptions="Center"/>
+                <Label Text="Data: " VerticalOptions="Center" HorizontalTextAlignment="End" />
                 <DatePicker x:Name="datePicker" Date="{Binding SelectedDate}"
                     Grid.Column="1" />
                 <Label Text="Categoria: " VerticalOptions="Center"
-                       Grid.Row="1" />
+                       Grid.Row="1" HorizontalTextAlignment="End" />
                 <Picker x:Name="pickerCategory" Grid.Row="1" Grid.Column="1" 
                         ItemsSource="{Binding Categories}"
                         SelectedItem="{Binding SelectedCategory}" />
                 <Button
                 Text="+" 
-                Clicked="OnAddCategoryClicked"
                 HorizontalOptions="Start" 
                 Grid.Row="1" Grid.Column="2" />
                 <Label Text="Valor: " VerticalOptions="Center"
-                       Grid.Row="2" />
+                       Grid.Row="2" HorizontalTextAlignment="End" />
                 <Entry Placeholder="0,00"
                        MaxLength="12" 
                        Keyboard="Numeric" Text="{Binding EntryValue}"
                        Grid.Row="2" Grid.Column="1" />
                 <Label Text="Descrição: " VerticalOptions="Center"
-                       Grid.Row="3" />
+                       Grid.Row="3" HorizontalTextAlignment="End" />
                 <Entry MaxLength="100"
                        Keyboard="Text" Text="{Binding Description}"
                        Placeholder="Descrição"
@@ -78,15 +75,13 @@
                                     <Label 
                                         Text="{Binding Resume}"
                                         LineBreakMode="WordWrap" />
-                                    <Button 
+                                    <Button
                                         Text="🗑" 
-                                        Command="{Binding BindingContext.RemoveExpenseCommand, 
-                                        Source={x:Reference Name=expensesListView}}"
-                                        CommandParameter="{Binding .}"
+                                        
                                         Grid.Column="1"
                                         BorderWidth="1"
                                         BackgroundColor="Transparent"
-                                        Padding="0"/>
+                                        Padding="0" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
