@@ -18,6 +18,9 @@ namespace ExpenseControl.ViewModels
         }
 
         [ObservableProperty]
+        string statusMessage;
+
+        [ObservableProperty]
         int selectedYear = DateTime.Now.Year;
 
         [ObservableProperty]
@@ -34,6 +37,8 @@ namespace ExpenseControl.ViewModels
 
         [ObservableProperty]
         ObservableCollection<ConsolidatedExpense> chartData = new();
+
+        public double MaxChartValue => ChartData.Any() ? ChartData.Max(c => c.TotalValue) : 1;
 
         partial void OnSelectedYearChanged(int value) => LoadConsolidatedExpensesCommand.Execute(null);
         partial void OnSelectedMonthChanged(int value) => LoadConsolidatedExpensesCommand.Execute(null);
@@ -58,6 +63,16 @@ namespace ExpenseControl.ViewModels
                 (SelectedYear == 0 || e.Date.Year == SelectedYear) &&
                 (SelectedMonth == 0 || e.Date.Month == SelectedMonth)).ToList();
 
+                if (!filtered.Any())
+                {
+                    ConsolidatedExpenses.Clear();
+                    ChartData.Clear();
+                    statusMessage = "Nenhuma despesa encontrada para o período selecionado.";
+                    return;
+                }
+
+                statusMessage = string.Empty;
+
                 List<ConsolidatedExpense> grouped = filtered
                     .GroupBy(e => new { e.Category, MonthYear = e.Date.ToString("MM/yyyy") })
                     .Select(g => new ConsolidatedExpense
@@ -71,7 +86,6 @@ namespace ExpenseControl.ViewModels
 
                 ConsolidatedExpenses = new ObservableCollection<ConsolidatedExpense>(grouped);
 
-
                 List<ConsolidatedExpense> chartGrouped = filtered
                     .GroupBy(e => e.Category)
                     .Select(g => new ConsolidatedExpense
@@ -82,7 +96,14 @@ namespace ExpenseControl.ViewModels
                     .OrderByDescending(c => c.TotalValue)
                     .ToList();
 
+                var max = chartGrouped.Max(c => c.TotalValue);
+
+                foreach (var item in chartGrouped)
+                    item.MaxChartValue = max;
+
                 ChartData = new ObservableCollection<ConsolidatedExpense>(chartGrouped);
+
+                OnPropertyChanged(nameof(MaxChartValue));
             }
             catch (Exception ex)
             {

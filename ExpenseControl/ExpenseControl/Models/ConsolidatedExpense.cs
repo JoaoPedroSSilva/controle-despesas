@@ -11,6 +11,7 @@ namespace ExpenseControl.Models
         public string Category { get; set; }
         public string MonthYear { get; set; }
         public double TotalValue { get; set; }
+        public double MaxChartValue { get; set; }
         public string Display => $"{MonthYear} - {Category}: R$ {TotalValue:N2}";
     }
 }

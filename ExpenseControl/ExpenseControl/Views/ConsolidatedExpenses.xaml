@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:ExpenseControl.ViewModels"
              xmlns:local="clr-namespace:ExpenseControl"
              x:Class="ExpenseControl.Views.ConsolidatedExpenses"
-             Title="ConsolidatedExpenses">
+             Title="Despesas Consolidadas">
 
     <ContentPage.BindingContext>
         <vm:ConsolidatedExpensesViewModel />
@@ -31,17 +31,30 @@
                 </Picker>
             </HorizontalStackLayout>
 
+            <Label Text="{Binding StatusMessage}"
+                    TextColor="Red"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    IsVisible="{Binding StatusMessage, Converter={StaticResource StringNullOrEmptyToBoolConverter}}"
+                    HorizontalOptions="Center" />
+
             <CollectionView ItemsSource="{Binding ConsolidatedExpenses}">
+                <CollectionView.Header>
+                    <Label Text="Despesas Consolidadas"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           Padding="0,10,0,0" />
+                </CollectionView.Header>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="Gray" Padding="10" CornerRadius="10">
-                            <Label Text="{Binding Display}" FontSize="16" />
+                            <Label Text="{Binding Display}" FontSize="12" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Label Text="Despesas por categoria" FontSize="20" />
+            <Label Text="Despesas por categoria" FontSize="20" FontAttributes="Bold" />
 
             <VerticalStackLayout>
                 <CollectionView ItemsSource="{Binding ChartData}" HeightRequest="300">
@@ -50,12 +63,18 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid ColumnDefinitions="*, Auto">
+                            <Grid ColumnDefinitions="*, Auto" Padding="5">
                                 <Label Text="{Binding Category}" VerticalOptions="Center" />
                                 <BoxView Color="SteelBlue"
                                          HeightRequest="20"
-                                         WidthRequest="{Binding TotalValue}"
-                                         VerticalOptions="Center"/>
+                                         VerticalOptions="Center">
+                                    <BoxView.WidthRequest>
+                                        <MultiBinding Converter="{StaticResource BarSizeConverter}">
+                                            <Binding Path="TotalValue"/>
+                                            <Binding Path="MaxChartValue"/>
+                                        </MultiBinding>
+                                    </BoxView.WidthRequest>
+                                </BoxView>
                                 <Label Text="{Binding TotalValue, StringFormat='R$ {0:N2}'}"
                                        Grid.Column="1"
                                        VerticalOptions="Center"/>

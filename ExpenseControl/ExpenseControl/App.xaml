@@ -11,7 +11,8 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converters:ValueToWidthConverter x:Key="ValueToWidthConverter" />
+            <converters:BarSizeConverter x:Key="BarSizeConverter" />
+            <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" Invert="True"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
