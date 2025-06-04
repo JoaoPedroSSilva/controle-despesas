@@ -63,11 +63,13 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid ColumnDefinitions="*, Auto" Padding="5">
-                                <Label Text="{Binding Category}" VerticalOptions="Center" />
+                            <Grid ColumnDefinitions="90,Auto,80" Padding="5" ColumnSpacing="10">
+                                <Label Text="{Binding Category}" VerticalOptions="Center" Grid.Column="0" />
                                 <BoxView Color="SteelBlue"
                                          HeightRequest="20"
-                                         VerticalOptions="Center">
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="Start"
+                                         Grid.Column="1">
                                     <BoxView.WidthRequest>
                                         <MultiBinding Converter="{StaticResource BarSizeConverter}">
                                             <Binding Path="TotalValue"/>
@@ -75,9 +77,9 @@
                                         </MultiBinding>
                                     </BoxView.WidthRequest>
                                 </BoxView>
-                                <Label Text="{Binding TotalValue, StringFormat='R$ {0:N2}'}"
-                                       Grid.Column="1"
-                                       VerticalOptions="Center"/>
+                                <Label Text="{Binding TotalValue, StringFormat='{0:N2}'}"
+                                       VerticalOptions="Center"
+                                       Grid.Column="2"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
