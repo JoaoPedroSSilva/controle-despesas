@@ -21,7 +21,6 @@
                         ItemsSource="{Binding AvailableYears}"
                         SelectedItem="{Binding SelectedYear}" />
 
-
                 <Picker Title="Mês"
                         ItemsSource="{Binding AvailableMonths}"
                         SelectedItem="{Binding SelectedMonth}">

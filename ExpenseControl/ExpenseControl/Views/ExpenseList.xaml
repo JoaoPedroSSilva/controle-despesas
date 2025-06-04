@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ExpenseControl.Views.ExpenseList">
+             xmlns:vm="clr-namespace:ExpenseControl.ViewModels"
+             x:Class="ExpenseControl.Views.ExpenseList"
+             x:Name="ExpensesPage"
+             Title="Listagem de Despesas">
+
+    <ContentPage.BindingContext>
+        <vm:ExpenseListViewModel/>
+    </ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="15,0"
-            Spacing="10"
-            BindingContext="ExpenseList">
+            Padding="15"
+            Spacing="10">
             <Label 
                 Text="Consultar lançamentos"
-                VerticalOptions="Center" 
+                FontSize="24"
                 HorizontalOptions="Center" />
-            <Label
-                x:Name="labelTotalSpent" />
-            <Border Stroke="LightGray"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 40,0,0,0"
-                Padding="15"
-                HorizontalOptions="Start" >
-                <ListView x:Name="expensesListView"
-                          IsPullToRefreshEnabled="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid ColumnDefinitions="10*, 1*">
-                                    <Label 
-                                Text="{Binding Resume}"
-                                LineBreakMode="WordWrap" />
-                                    <Button 
-                                Text="🗑" 
-                                Grid.Column="1"
-                                BorderWidth="1"
-                                Clicked="OnRemoveExpenseClicked"
-                                BackgroundColor="Transparent"
-                                Padding="0"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Border>
+            <HorizontalStackLayout Spacing="10">
+                <Picker Title="Ano" ItemsSource="{Binding AvailableYears}" SelectedItem="{Binding SelectedYear}" />
+                <Picker Title="Mês" ItemsSource="{Binding availableMonths}" SelectedItem="{Binding SelectedMonth}"/>
+            </HorizontalStackLayout>
+
+            <Label Text="{Binding TotalSpent, StringFormat='Total: {0:C}'}" FontAttributes="Bold"/>
+
+            <CollectionView ItemsSource="{Binding Expenses}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="10*, Auto" Padding="5">
+                            <Label Text="{Binding Resume}" LineBreakMode="WordWrap" />
+
+                            <Button Text="🗑"
+                                    Grid.Column="1"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding BindingContext.DeleteExpenseCommand, Source={x:Reference Name=ExpensesPage}}"
+                                    CommandParameter="{Binding}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
