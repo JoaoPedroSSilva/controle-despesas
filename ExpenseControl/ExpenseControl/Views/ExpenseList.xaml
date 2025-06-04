@@ -21,6 +21,7 @@
             <HorizontalStackLayout Spacing="10">
                 <Picker Title="Ano" ItemsSource="{Binding AvailableYears}" SelectedItem="{Binding SelectedYear}" />
                 <Picker Title="Mês" ItemsSource="{Binding availableMonths}" SelectedItem="{Binding SelectedMonth}"/>
+                <Button Text="Buscar" Command="{Binding LoadExpensesCommand}" HorizontalOptions="End" Margin="0,10,0,0"/>
             </HorizontalStackLayout>
 
             <Label Text="{Binding TotalSpent, StringFormat='Total: {0:C}'}" FontAttributes="Bold"/>

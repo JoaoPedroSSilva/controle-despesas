@@ -71,17 +71,10 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid ColumnDefinitions="10*, 1*">
+                                <Grid ColumnDefinitions="10*">
                                     <Label 
                                         Text="{Binding Resume}"
                                         LineBreakMode="WordWrap" />
-                                    <Button
-                                        Text="🗑" 
-                                        
-                                        Grid.Column="1"
-                                        BorderWidth="1"
-                                        BackgroundColor="Transparent"
-                                        Padding="0" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
