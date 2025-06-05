@@ -38,6 +38,9 @@ namespace ExpenseControl.ViewModels
         [ObservableProperty]
         ObservableCollection<ConsolidatedExpense> chartData = new();
 
+        [ObservableProperty]
+        double totalExpense = 0.0;
+
         public double MaxChartValue => ChartData.Any() ? ChartData.Max(c => c.TotalValue) : 1;
 
         partial void OnSelectedYearChanged(int value) => LoadConsolidatedExpensesCommand.Execute(null);
@@ -67,11 +70,11 @@ namespace ExpenseControl.ViewModels
                 {
                     ConsolidatedExpenses.Clear();
                     ChartData.Clear();
-                    statusMessage = "Nenhuma despesa encontrada para o período selecionado.";
+                    StatusMessage = "Nenhuma despesa encontrada para o período selecionado.";
                     return;
                 }
 
-                statusMessage = string.Empty;
+                StatusMessage = string.Empty;
 
                 List<ConsolidatedExpense> grouped = filtered
                     .GroupBy(e => new { e.Category, MonthYear = e.Date.ToString("MM/yyyy") })
@@ -97,9 +100,14 @@ namespace ExpenseControl.ViewModels
                     .ToList();
 
                 var max = chartGrouped.Max(c => c.TotalValue);
+                TotalExpense = 0.0;
 
                 foreach (var item in chartGrouped)
+                {
                     item.MaxChartValue = max;
+                    TotalExpense += item.TotalValue;
+                }
+                    
 
                 ChartData = new ObservableCollection<ConsolidatedExpense>(chartGrouped);
 

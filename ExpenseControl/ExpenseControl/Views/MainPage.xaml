@@ -38,9 +38,10 @@
                         ItemsSource="{Binding Categories}"
                         SelectedItem="{Binding SelectedCategory}" />
                 <Button
-                Text="+" 
-                HorizontalOptions="Start" 
-                Grid.Row="1" Grid.Column="2" />
+                    Text="+" 
+                    Command="{Binding AddCategoryCommand}"
+                    HorizontalOptions="Start" 
+                    Grid.Row="1" Grid.Column="2" />
                 <Label Text="Valor: " VerticalOptions="Center"
                        Grid.Row="2" HorizontalTextAlignment="End" />
                 <Entry Placeholder="0,00"

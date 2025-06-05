@@ -32,8 +32,7 @@
 
             <Label Text="{Binding StatusMessage}"
                     TextColor="Red"
-                    FontAttributes="Bold"
-                    FontSize="16"
+                    FontSize="15"
                     IsVisible="{Binding StatusMessage, Converter={StaticResource StringNullOrEmptyToBoolConverter}}"
                     HorizontalOptions="Center" />
 
@@ -53,17 +52,15 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Label Text="Despesas por categoria" FontSize="20" FontAttributes="Bold" />
-
             <VerticalStackLayout>
-                <CollectionView ItemsSource="{Binding ChartData}" HeightRequest="300">
+                <CollectionView ItemsSource="{Binding ChartData}" HeightRequest="500">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="1" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid ColumnDefinitions="90,Auto,80" Padding="5" ColumnSpacing="10">
-                                <Label Text="{Binding Category}" VerticalOptions="Center" Grid.Column="0" />
+                            <Grid ColumnDefinitions="90,Auto,80" ColumnSpacing="10">
+                                <Label Text="{Binding Category}" Grid.Column="0" VerticalTextAlignment="Center" />
                                 <BoxView Color="SteelBlue"
                                          HeightRequest="20"
                                          VerticalOptions="Center"
@@ -83,6 +80,10 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Total de Despesas: " FontAttributes="Bold"/>
+                    <Label Text="{Binding TotalExpense, StringFormat='{0:N2}'}" FontAttributes="Bold"/>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

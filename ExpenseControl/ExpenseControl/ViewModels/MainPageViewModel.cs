@@ -40,45 +40,42 @@ namespace ExpenseControl.ViewModels
         [RelayCommand]
         private async Task AddCategory()
         {
-            /*string newCategory = await DisplayPromptAsync("Adicionar categoria", "Digite a nova categoria.", "Adicionar", "Cancelar");
+            string newCategory = await Shell.Current.DisplayPromptAsync("Adicionar categoria", "Digite a nova categoria.", "Adicionar", "Cancelar");
             if (string.IsNullOrWhiteSpace(newCategory))
                 return;
             newCategory = newCategory.Trim();
 
-            foreach (string category in categories)
+            foreach (string category in Categories)
             {
                 if (category == newCategory)
                 {
-                    await DisplayAlert("Categoria já cadastrada!", "Nome de categoria já cadastrada.", "OK");
+                    await Shell.Current.DisplayAlert("Categoria já cadastrada!", "Nome de categoria já cadastrada.", "OK");
                     return;
                 }
             }
-            categories.Add(newCategory);
+            Categories.Add(newCategory);
 
-            pickerCategory.ItemsSource = null;
-            pickerCategory.ItemsSource = categories;
-
-            await DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");*/
+            await Shell.Current.DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
         }
 
         [RelayCommand]
         private async Task SaveExpense()
         {
-            if (string.IsNullOrWhiteSpace(selectedCategory) ||
-                string.IsNullOrWhiteSpace(entryValue) ||
-                string.IsNullOrWhiteSpace(description))
+            if (string.IsNullOrWhiteSpace(SelectedCategory) ||
+                string.IsNullOrWhiteSpace(EntryValue) ||
+                string.IsNullOrWhiteSpace(Description))
             {
                 StatusMessage = "Todos os campos devem ser preenchidos.";
                 return;
             }
 
-            if (!double.TryParse(entryValue, out double value))
+            if (!double.TryParse(EntryValue, out double value))
             {
                 StatusMessage = "Valor inválido.";
                 return;
             }
 
-            ExpenseEntry expense = new(selectedDate, selectedCategory, value, description);
+            ExpenseEntry expense = new(SelectedDate, SelectedCategory, value, Description);
             await _repo.AddNewExpense(expense);
             StatusMessage = _repo.StatusMessage;
 
@@ -100,8 +97,8 @@ namespace ExpenseControl.ViewModels
 
         private async void LoadData()
         {
-            var catList = await _repo.GetExpensesCategories();
-            Categories = new ObservableCollection<string>(catList);
+            var categList = await _repo.GetExpensesCategories();
+            Categories = new ObservableCollection<string>(categList);
             await LoadLastExpenses();
         }
 

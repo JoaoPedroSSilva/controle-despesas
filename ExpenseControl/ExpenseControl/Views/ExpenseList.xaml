@@ -29,15 +29,17 @@
             <CollectionView ItemsSource="{Binding Expenses}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="10*, Auto" Padding="5">
-                            <Label Text="{Binding Resume}" LineBreakMode="WordWrap" />
+                        <Frame BorderColor="Gray" CornerRadius="10" Padding="5">
+                            <Grid ColumnDefinitions="10*, Auto" >
+                                <Label Text="{Binding Resume}" VerticalOptions="Center" LineBreakMode="WordWrap" />
 
-                            <Button Text="🗑"
-                                    Grid.Column="1"
-                                    BackgroundColor="Transparent"
-                                    Command="{Binding BindingContext.DeleteExpenseCommand, Source={x:Reference Name=ExpensesPage}}"
-                                    CommandParameter="{Binding}" />
-                        </Grid>
+                                <Button Text="🗑"
+                                        Grid.Column="1"
+                                        BackgroundColor="AliceBlue"
+                                        Command="{Binding BindingContext.DeleteExpenseCommand, Source={x:Reference Name=ExpensesPage}}"
+                                        CommandParameter="{Binding}" />
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
