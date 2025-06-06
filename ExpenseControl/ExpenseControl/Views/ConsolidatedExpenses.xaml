@@ -14,21 +14,28 @@
         <VerticalStackLayout Padding="20" Spacing="10">
             <Label Text="Consolidação de Despesas"
                    FontSize="24"
+                   FontAutoScalingEnabled="True"
                    HorizontalOptions="Center" />
 
-            <HorizontalStackLayout Spacing="10">
+            <FlexLayout Direction="Row"
+                        Wrap="Wrap"
+                        JustifyContent="SpaceBetween"
+                        AlignItems="Center"
+                        Margin="0,0,0,10">
                 <Picker Title="Ano"
+                        WidthRequest="150"
                         ItemsSource="{Binding AvailableYears}"
                         SelectedItem="{Binding SelectedYear}" />
 
                 <Picker Title="Mês"
+                        WidthRequest="150"
                         ItemsSource="{Binding AvailableMonths}"
                         SelectedItem="{Binding SelectedMonth}">
                     <Picker.ItemDisplayBinding>
                         <Binding StringFormat="{}{0:D2}" />
                     </Picker.ItemDisplayBinding>
                 </Picker>
-            </HorizontalStackLayout>
+            </FlexLayout>
 
             <Label Text="{Binding StatusMessage}"
                     TextColor="Red"
@@ -59,7 +66,7 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid ColumnDefinitions="90,Auto,80" ColumnSpacing="10">
+                            <Grid ColumnDefinitions="2*,6*,2*" ColumnSpacing="5">
                                 <Label Text="{Binding Category}" Grid.Column="0" VerticalTextAlignment="Center" />
                                 <BoxView Color="SteelBlue"
                                          HeightRequest="20"
