@@ -53,45 +53,43 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="Gray" Padding="10" CornerRadius="10">
-                            <Label Text="{Binding Display}" FontSize="12" />
+                            <Label Text="{Binding Display}" FontSize="13" LineBreakMode="WordWrap" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <VerticalStackLayout>
-                <CollectionView ItemsSource="{Binding ChartData}" HeightRequest="500">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="1" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="2*,6*,2*" ColumnSpacing="5">
-                                <Label Text="{Binding Category}" Grid.Column="0" VerticalTextAlignment="Center" />
-                                <BoxView Color="SteelBlue"
-                                         HeightRequest="20"
-                                         VerticalOptions="Center"
-                                         HorizontalOptions="Start"
-                                         Grid.Column="1">
-                                    <BoxView.WidthRequest>
-                                        <MultiBinding Converter="{StaticResource BarSizeConverter}">
-                                            <Binding Path="TotalValue"/>
-                                            <Binding Path="MaxChartValue"/>
-                                        </MultiBinding>
-                                    </BoxView.WidthRequest>
-                                </BoxView>
-                                <Label Text="{Binding TotalValue, StringFormat='{0:N2}'}"
-                                       VerticalOptions="Center"
-                                       Grid.Column="2"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <HorizontalStackLayout Spacing="10">
-                    <Label Text="Total de Despesas: " FontAttributes="Bold"/>
-                    <Label Text="{Binding TotalExpense, StringFormat='{0:N2}'}" FontAttributes="Bold"/>
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding ChartData}" >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="2*,6*,2*" ColumnSpacing="5">
+                            <Label Text="{Binding Category}" Grid.Column="0" VerticalTextAlignment="Center"
+                                   LineBreakMode="TailTruncation"/>
+                            <BoxView Color="SteelBlue"
+                                        HeightRequest="20"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"
+                                        Grid.Column="1">
+                                <BoxView.WidthRequest>
+                                    <MultiBinding Converter="{StaticResource BarSizeConverter}">
+                                        <Binding Path="TotalValue"/>
+                                        <Binding Path="MaxChartValue"/>
+                                    </MultiBinding>
+                                </BoxView.WidthRequest>
+                            </BoxView>
+                            <Label Text="{Binding TotalValue, StringFormat='{0:N2}'}"
+                                    VerticalOptions="Center" Grid.Column="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Total de Despesas: " FontAttributes="Bold"/>
+                <Label Text="{Binding TotalExpense, StringFormat='{0:N2}'}" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

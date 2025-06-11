@@ -54,6 +54,7 @@ namespace ExpenseControl.ViewModels
                 }
             }
             Categories.Add(newCategory);
+            SelectedCategory = newCategory;
 
             await Shell.Current.DisplayAlert("Categoria adicionada!", "Nova categoria cadastrada.", "OK");
         }

@@ -25,9 +25,9 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="10*"/>
                 </Grid.ColumnDefinitions>
                 <Label Text="Data: " VerticalOptions="Center" HorizontalTextAlignment="End" />
                 <DatePicker x:Name="datePicker" Date="{Binding SelectedDate}"
