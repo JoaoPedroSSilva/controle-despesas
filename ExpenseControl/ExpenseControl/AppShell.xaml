@@ -7,21 +7,14 @@
     xmlns:view="clr-namespace:ExpenseControl.Views"
     Shell.FlyoutBehavior="Flyout"
     Shell.TabBarIsVisible="False"
-    Title="ExpenseControl">
+    Title="Controle de Despesas">
 
     <Shell.FlyoutHeader>
-        <VerticalStackLayout>
-            <Image Source="dotnet_bot.png" WidthRequest="100"/>
-            <Label Text="Flyout Header" HorizontalTextAlignment="Center"/>
+        <VerticalStackLayout Padding="15" BackgroundColor="{StaticResource BackgroundColor}">
+            <Image Source="expense_control_logo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center"/>
+            <Label Text="Controle de Despesas" Style="{StaticResource HeadlineLabel}" HorizontalTextAlignment="Center"/>
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
-
-    <Shell.FlyoutFooter>
-        <VerticalStackLayout>
-            <Image Source="dotnet_bot.png" WidthRequest="100"/>
-            <Label Text="Flyout Footer" HorizontalTextAlignment="Center"/>
-        </VerticalStackLayout>
-    </Shell.FlyoutFooter>
 
     <Shell.ItemTemplate>
         <DataTemplate>
@@ -39,19 +32,19 @@
         Title="Cadastrar Despesas"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" 
-            Icon="dotnet_bot.png"/>
+            Icon="wallet_add_icon.png"/>
 
         <ShellContent
         Title="Listar Despesas"
         ContentTemplate="{DataTemplate view:ExpenseList}"
         Route="ExpenseList"
-            Icon="dotnet_bot.png"/>
+            Icon="list_expense.png"/>
 
         <ShellContent
         Title="Consolidar Despesas"
         ContentTemplate="{DataTemplate view:ConsolidatedExpenses}"
         Route="ConsolidatedExpenses"
-            Icon="dotnet_bot.png"/>
+            Icon="chart_expense.png"/>
     </FlyoutItem>
 
 </Shell>
