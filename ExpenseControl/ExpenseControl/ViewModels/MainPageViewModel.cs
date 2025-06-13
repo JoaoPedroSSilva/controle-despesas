@@ -76,6 +76,7 @@ namespace ExpenseControl.ViewModels
                 return;
             }
 
+            Description = Description.Trim();
             ExpenseEntry expense = new(SelectedDate, SelectedCategory, value, Description);
             await _repo.AddNewExpense(expense);
             StatusMessage = _repo.StatusMessage;

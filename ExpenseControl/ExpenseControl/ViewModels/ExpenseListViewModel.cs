@@ -64,13 +64,13 @@ namespace ExpenseControl.ViewModels
                 List<ExpenseEntry> allExpenses = await _repo.GetAllExpenses();
 
                 List<ExpenseEntry> filtered = allExpenses.Where(e =>
-                    (e.Date.Year == selectedYear) &&
-                    (e.Date.Month == selectedMonth) &&
+                    (e.Date.Year == SelectedYear) &&
+                    (e.Date.Month == SelectedMonth) &&
                     (string.IsNullOrEmpty(SearchDescription) ||
                     e.Description.Contains(SearchDescription, StringComparison.OrdinalIgnoreCase)) &&
-                    (string.IsNullOrEmpty(selectedCategory) || e.Category == SelectedCategory) &&
+                    (string.IsNullOrEmpty(SelectedCategory) || e.Category == SelectedCategory) &&
                     (!MinValue.HasValue || e.Value >= MinValue) &&
-                    (!maxValue.HasValue || e.Value <= MaxValue))
+                    (!MaxValue.HasValue || e.Value <= MaxValue))
                     .OrderByDescending(e => e.Date).ToList();
 
                 Expenses = new ObservableCollection<ExpenseEntry>(filtered);

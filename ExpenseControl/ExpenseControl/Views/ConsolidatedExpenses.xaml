@@ -65,9 +65,9 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="2*,6*,2*" ColumnSpacing="5">
+                        <Grid ColumnDefinitions="1*,2*,1*" ColumnSpacing="5">
                             <Label Text="{Binding Category}" Grid.Column="0" VerticalTextAlignment="Center"
-                                   LineBreakMode="TailTruncation"/>
+                                   LineBreakMode="WordWrap"/>
                             <BoxView Color="SteelBlue"
                                         HeightRequest="20"
                                         VerticalOptions="Center"
