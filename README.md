@@ -1,13 +1,19 @@
 # controle-despesas
-Aplicação com dotnet MAUI para registro de despesas pessoais com permanência de dados local.
+Aplicativo multiplataforma desenvolvido com .NET MAUI para controle de despesas pessoais, com armazenamento local e interface adaptada para diferentes dispositivos.
 
 ## Recursos
-- **Controle todas as suas despesas:** Grave lançamentos para cada despesa ocorrida.
-- **Cadastre categorias personalizadas:** Cadastre mais quantas categorias de despesa que precisar para personalizar e adequar as seus tipos de despesas.
-- **Multi Plataforma:** Pode utilizar o aplicativo em seu dispositivo de preferência, entre Desktop Windows, Android, IOS e MAC OS.
+- **Registro de despesas:** Cadastre e visualize seus lançamentos de forma organizada..
+- **Categorias personalizadas:** Crie e edite categorias para classificar melhor suas despesas.
+- **Consolidação por mês:** Visualize os gastos mensais consolidados e o total de despesas.
+- **Relatórios gráficos simplificados:** Veja gráficos que mostram a proporção dos gastos por categoria.
+- **Layout responsivo:** Interface otimizada para telas menores (celulares) e maiores (desktop).
+- **Arquitetura MVVM aplicada:** Separação entre lógica de apresentação e visualização implementada.
+- **Compatibilidade multiplataforma:** Disponível para Windows e Android (com suporte futuro para iOS e macOS).
 
-## Tech Stack
-- **Aplicação**: .NET MAUI, C#, XAML, SQL, SQLite.
+## Tecnologias
+- **Frontend e Backend:**.NET MAUI, C#, XAML
+- **Banco de Dados:** SQLite (local)
+- **Arquitetura:** MVVM
 
 ## Planejamentos Futuros
 - Testar arquitetura MVVM;
