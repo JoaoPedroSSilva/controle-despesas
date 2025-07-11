@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System.Text.Json;
 using ExpenseControl.Models;
 
 namespace ExpenseControl.Services
@@ -61,9 +62,9 @@ namespace ExpenseControl.Services
             }
 
             return new List<ExpenseEntry>();
-        } 
+        }
 
-        public async Task<List<ExpenseEntry>> GetLastsExpenses(int limit) 
+        public async Task<List<ExpenseEntry>> GetLastsExpenses(int limit)
         {
             try
             {
@@ -88,7 +89,7 @@ namespace ExpenseControl.Services
                 string querryYear = year.ToString();
                 string querryMonth = month.ToString("D2");
                 string sqlQuerry = "SELECT * FROM expenses WHERE STRFTIME('%Y', DateString) = ? AND STRFTIME('%m', DateString) = ?";
-                List <ExpenseEntry> currentMonthExpenses = await conn.QueryAsync<ExpenseEntry>(sqlQuerry, querryYear, querryMonth);
+                List<ExpenseEntry> currentMonthExpenses = await conn.QueryAsync<ExpenseEntry>(sqlQuerry, querryYear, querryMonth);
                 return currentMonthExpenses;
             }
             catch (Exception ex)
@@ -112,12 +113,12 @@ namespace ExpenseControl.Services
                 StatusMessage = string.Format("Falha ao recuperar dados. {0}", ex.Message);
             }
 
-            return new List<string>() 
-            { 
+            return new List<string>()
+            {
                 "Mercado",
                 "Gasolina",
                 "Condomínio",
-                "Lanches" 
+                "Lanches"
             };
         }
 
@@ -135,26 +136,57 @@ namespace ExpenseControl.Services
             }
         }
 
-        /* public void RemoveExpense(ExpenseEntry expense)
+        public async Task ExportExpensesToJsonAsync(string filePath)
         {
-            int result = 0;
             try
             {
-                Init();
+                await Init();
+                List<ExpenseEntry> allExpenses = await conn.Table<ExpenseEntry>().ToListAsync();
 
-                if (expense == null)
-                    throw new Exception("Valid expense required");
+                string json = System.Text.Json.JsonSerializer.Serialize(allExpenses, new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                });
 
-                result = conn.Delete(expense.Id);
-
-                StatusMessage = string.Format("{0} lançamento removido (Despesa: {1})",
-                    result, expense.Description);
+                File.WriteAllText(filePath, json);
+                StatusMessage = $"Dados exportados para: {filePath}";
             }
             catch (Exception ex)
             {
-                StatusMessage = string.Format("Falha ao remover {0}. Erro: {1}",
-                    expense.Description, ex.Message);
+                StatusMessage = $"Erro ao exportar dados: {ex.Message}";
             }
-        } */
+        }
+
+        public async Task ImportExpensesFromJsonAsync(string filePath)
+        {
+            try
+            {
+                await Init();
+
+                if (!File.Exists(filePath))
+                    throw new FileNotFoundException("Arquivo não encontrado.");
+
+                string json = File.ReadAllText(filePath);
+                List<ExpenseEntry> importedExpenses = System.Text.Json.JsonSerializer.Deserialize<List<ExpenseEntry>>(json);
+
+                if (importedExpenses == null || !importedExpenses.Any())
+                {
+                    StatusMessage = "Nenhum despesa encontrada no arquivo.";
+                    return;
+                }
+
+                foreach (ExpenseEntry expense in importedExpenses)
+                {
+                    expense.Id = 0;
+                    await conn.InsertAsync(expense);
+                }
+
+                StatusMessage = $"Importação concluída com sucesso. Total de despesas importadas: {importedExpenses.Count}";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Erro ao importar dados {ex.Message}";
+            }
+        }
     }
 }
