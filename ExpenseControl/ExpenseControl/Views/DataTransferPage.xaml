@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ExpenseControl.ViewModels"
+             x:Class="ExpenseControl.Views.DataTransferPage"
+             Title="Importar / Exportar Dados">
+
+    <ContentPage.BindingContext>
+        <vm:DataTransferViewModel />
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label 
+            Text="Gerenciar Dados"
+            FontSize="24" 
+            HorizontalOptions="Center" />
+
+        <Button Text="Exportar Dados para JSON"
+                Command="{Binding ExportCommand}" />
+
+        <Button Text="Importar Dados para JSON"
+        Command="{Binding ImportCommand}" />
+
+        <Label Text="{Binding StatusMessage}"
+               TextColor="DarkGreen"
+               FontAttributes="Italic"
+               FontSize="14"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -14,6 +14,9 @@
     <MauiXaml Update="Views\ConsolidatedExpenses.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\DataTransferPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\ExpenseList.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
