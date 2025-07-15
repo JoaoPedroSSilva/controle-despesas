@@ -29,22 +29,28 @@
 
     <FlyoutItem Title="Home" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-        Title="Cadastrar Despesas"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" 
+            Title="Cadastrar Despesas"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" 
             Icon="wallet_add_icon.png"/>
 
         <ShellContent
-        Title="Listar Despesas"
-        ContentTemplate="{DataTemplate view:ExpenseList}"
-        Route="ExpenseList"
+            Title="Listar Despesas"
+            ContentTemplate="{DataTemplate view:ExpenseList}"
+            Route="ExpenseList"
             Icon="list_expense.png"/>
 
         <ShellContent
-        Title="Consolidar Despesas"
-        ContentTemplate="{DataTemplate view:ConsolidatedExpenses}"
-        Route="ConsolidatedExpenses"
+            Title="Consolidar Despesas"
+            ContentTemplate="{DataTemplate view:ConsolidatedExpenses}"
+            Route="ConsolidatedExpenses"
             Icon="chart_expense.png"/>
+
+        <ShellContent
+            Title="Importar / Exportar Despesas"
+            ContentTemplate="{DataTemplate view:DataTransferPage}"
+            Route="DataTransferPage"
+            Icon="import_export.png"/>
     </FlyoutItem>
 
 </Shell>
