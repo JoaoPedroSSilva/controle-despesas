@@ -1,34 +1,39 @@
-﻿# TODO - Melhorias e Pendências do Projeto ExpenseControl
+﻿### TODO
 
-## 📌 Interface (UI/UX)
-- [ ] Corrigir corte de nomes no menu lateral (Flyout)
-- [ ] Ajustar espaçamentos em telas pequenas (responsividade)
-- [ ] Melhorar contraste de cores em temas claros e escuros
-- [ ] Aplicar estilos mais consistentes entre telas
+#### Funcionalidades pendentes
 
-## ⚙️ Funcionalidades Futuras
-- [ ] Implementar autenticação de usuários para sincronização de dados
-- [ ] Suporte a banco de dados online (API REST)
-- [ ] Sincronização entre dispositivos com resolução de conflitos
-- [ ] Exportação dos dados também para formatos .xlsx, .pdf, .txt
-- [ ] Backup automático em nuvem
-- [ ] Sincronização agendada e/ou manual com notificação de sucesso/erro
+- [ ] Criar sistema de login de usuário para sincronização futura com banco de dados online.
+- [ ] Implementar sincronização dos dados entre dispositivos (API REST).
+- [ ] Permitir configuração de banco local ou banco online híbrido.
 
-## 🛠 Refatorações Técnicas
-- [ ] Melhorar organização das pastas do projeto (ex: ViewModels, Services, Models)
-- [ ] Separar a lógica de exportação/importação em um serviço dedicado
-- [ ] Centralizar tratamento de erros e mensagens do usuário
-- [ ] Revisar acessos ao banco de dados para padronização
-- [ ] Adicionar testes unitários básicos para as principais funcionalidades
+#### Melhorias planejadas
 
-## 🐞 Bugs ou Problemas Conhecidos
-- [ ] Nomes de páginas no menu de navegação aparecem cortados (estética)
-- [ ] Layouts com botões desalinhados em alguns dispositivos Android
-- [ ] Caminhos de arquivos no Android ainda não acessam corretamente a pasta Downloads
+- [ ] Filtro na exportação de dados
+  - Exportar por mês específico
+  - Exportar por intervalo de datas personalizado
+  - Permitir selecionar categorias específicas para exportação
 
-## ✅ Concluídos
+- [ ] Otimizar visualização de categorias na consolidação
+  - Agrupar categorias com baixo valor individual em "Outras despesas"
+  - Exibir individualmente apenas as principais categorias
 
+- [ ] Filtros avançados na listagem de despesas
+  - Buscar por valores: exato, maior que, menor que, entre
+  - Filtro por intervalo de datas
+  - Filtro por categoria
+  - Buscar por termos na descrição
 
----
+- [ ] Separar despesas por forma de pagamento
+  - Incluir campo para tipo de pagamento: cartão de crédito, dinheiro ou saldo bancário
+  - Permitir visualização e filtragem por tipo de pagamento
 
-📝 Última atualização: 2025-07-15
+#### Ajustes estéticos
+
+- [ ] Corrigir corte de nome das páginas no menu de navegação (Flyout)
+- [ ] Corrigir tema escuro automático no Android apk.
+- [ ] Melhorar adaptação do layout para telas menores (ex. dispositivos Android)
+
+#### Documentação
+
+- [ ] Criar documentação completa do projeto
+- [ ] Adicionar instruções de build e publicação para Android e Windows

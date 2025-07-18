@@ -21,8 +21,22 @@
             <HorizontalStackLayout Spacing="10">
                 <Picker Title="Ano" ItemsSource="{Binding AvailableYears}" SelectedItem="{Binding SelectedYear}" />
                 <Picker Title="Mês" ItemsSource="{Binding availableMonths}" SelectedItem="{Binding SelectedMonth}"/>
-                <Button Text="Buscar" Command="{Binding LoadExpensesCommand}" HorizontalOptions="End" Margin="0,10,0,0"/>
             </HorizontalStackLayout>
+
+            <Entry Placeholder="Descrição" Text="{Binding SearchDescription}" />
+            <Picker Title="Categoria" ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding SelectedCategory}" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Entry Placeholder="Valor mínimo"
+                       Keyboard="Numeric"
+                       Text="{Binding MinValue, Mode=TwoWay}" />
+
+                <Entry Placeholder="Valor máximo"
+                        Keyboard="Numeric"
+                        Text="{Binding MaxValue, Mode=TwoWay}" />
+            </HorizontalStackLayout>
+
+            <Button Text="Buscar" Command="{Binding LoadExpensesCommand}" HorizontalOptions="Center" Margin="0,10,0,0"/>
 
             <Label Text="{Binding TotalSpent, StringFormat='Total: {0:C}'}" FontAttributes="Bold"/>
 
