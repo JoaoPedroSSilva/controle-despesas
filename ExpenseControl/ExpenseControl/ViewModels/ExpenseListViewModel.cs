@@ -68,7 +68,7 @@ namespace ExpenseControl.ViewModels
                     (e.Date.Month == SelectedMonth) &&
                     (string.IsNullOrEmpty(SearchDescription) ||
                     e.Description.Contains(SearchDescription, StringComparison.OrdinalIgnoreCase)) &&
-                    (string.IsNullOrEmpty(SelectedCategory) || e.Category == SelectedCategory) &&
+                    (SelectedCategory == "Todas" || string.IsNullOrEmpty(SelectedCategory) || e.Category == SelectedCategory) &&
                     (!MinValue.HasValue || e.Value >= MinValue) &&
                     (!MaxValue.HasValue || e.Value <= MaxValue))
                     .OrderByDescending(e => e.Date).ToList();
@@ -107,8 +107,12 @@ namespace ExpenseControl.ViewModels
         private async void LoadAvaibleCategories()
         {
             List<ExpenseEntry> allExpenses = await _repo.GetAllExpenses();
-            var categories = allExpenses.Select(e => e.Category).Distinct().OrderBy(c => c);
-            AvailableCategories = new ObservableCollection<string>(categories); 
+            var categories = allExpenses.Select(e => e.Category).Distinct().OrderBy(c => c).ToList();
+
+            categories.Insert(0, "Todas");
+
+            AvailableCategories = new ObservableCollection<string>(categories);
+            SelectedCategory = "Todas";
         }
     }
 }
