@@ -20,6 +20,23 @@ namespace ExpenseControl.Services
             }
             conn = new SQLiteAsyncConnection(_dbPath);
             await conn.CreateTableAsync<ExpenseEntry>();
+            await ApplyMigrationsAsync();
+        }
+
+        private async Task ApplyMigrationsAsync()
+        {
+            try
+            {
+                List<SQLiteConnection.ColumnInfo> tableInfo = await conn.GetTableInfoAsync("expenses");
+                var hasPaymentType = tableInfo.Any(c => c.Name == "PaymentType");
+
+                if (!hasPaymentType)
+                    await conn.ExecuteAsync("ALTER TABLE expenses ADD COLUMN PaymentType TEXT DEFAULT 'Cartão'");
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Erro ao aplicar migração: {ex.Message}";
+            }
         }
 
         public PersonRepository(string dbPath)
@@ -143,7 +160,7 @@ namespace ExpenseControl.Services
                 await Init();
                 List<ExpenseEntry> allExpenses = await conn.Table<ExpenseEntry>().ToListAsync();
 
-                string json = System.Text.Json.JsonSerializer.Serialize(allExpenses, new JsonSerializerOptions
+                string json = JsonSerializer.Serialize(allExpenses, new JsonSerializerOptions
                 {
                     WriteIndented = true,
                 });
@@ -167,7 +184,7 @@ namespace ExpenseControl.Services
                     throw new FileNotFoundException("Arquivo não encontrado.");
 
                 string json = File.ReadAllText(filePath);
-                List<ExpenseEntry> importedExpenses = System.Text.Json.JsonSerializer.Deserialize<List<ExpenseEntry>>(json);
+                List<ExpenseEntry> importedExpenses = JsonSerializer.Deserialize<List<ExpenseEntry>>(json);
 
                 if (importedExpenses == null || !importedExpenses.Any())
                 {
@@ -187,6 +204,27 @@ namespace ExpenseControl.Services
             {
                 StatusMessage = $"Erro ao importar dados {ex.Message}";
             }
+        }
+
+        internal async Task<List<string>> GetExpensesPaymentsTypes()
+        {
+            try
+            {
+                await Init();
+                var paymentsTypes = await conn.QueryAsync<ExpenseEntry>("SELECT DISTINCT PaymentType FROM expenses");
+                return paymentsTypes.Select(x => x.PaymentType).ToList();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Falha ao recuperar dados de tipos de pagamentos. {0}", ex.Message);
+            }
+
+            return new List<string>()
+            {
+                "Cartão",
+                "Débito",
+                "Dinheiro"
+            };
         }
     }
 }

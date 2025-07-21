@@ -15,8 +15,11 @@ public class ExpenseEntry
     public string Description { get; set; }
     public string Resume { get; set; }
 
+    public string PaymentType { get; set; } = "Cartão";
 
-    public ExpenseEntry(DateTime date, string category, double value, string description)
+
+    public ExpenseEntry(DateTime date, string category, double value, 
+        string description, string paymentType = "Cartão")
     {
         DateEntry = DateTime.Now;
         Date = date;
@@ -24,6 +27,7 @@ public class ExpenseEntry
         Category = category;
         Value = value;
         Description = description;
+        PaymentType = paymentType;
         Resume = ToString();
     }
 
@@ -34,7 +38,7 @@ public class ExpenseEntry
         return Date.ToShortDateString() + "; R$" + Value.ToString("F2")
             + "; Categoria: "
             + Category 
-            + "; (" + Description + ").";
+            + "; Tipo: " + PaymentType + "; (" + Description + ").";
     }
 }
 

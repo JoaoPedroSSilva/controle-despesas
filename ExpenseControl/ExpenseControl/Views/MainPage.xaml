@@ -23,6 +23,7 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="15*"/>
@@ -34,7 +35,7 @@
                     Grid.Column="1" />
                 <Label Text="Categoria: " VerticalOptions="Center"
                        Grid.Row="1" HorizontalTextAlignment="End" />
-                <Picker x:Name="pickerCategory" Grid.Row="1" Grid.Column="1" 
+                <Picker Grid.Row="1" Grid.Column="1" 
                         ItemsSource="{Binding Categories}"
                         SelectedItem="{Binding SelectedCategory}" />
                 <Button
@@ -42,23 +43,33 @@
                     Command="{Binding AddCategoryCommand}"
                     HorizontalOptions="Start" 
                     Grid.Row="1" Grid.Column="2" />
+                <Label Text="Forma de Pagamento: " VerticalOptions="Center"
+                    Grid.Row="2" HorizontalTextAlignment="End" />
+                <Picker Grid.Row="2" Grid.Column="1" 
+                    ItemsSource="{Binding PaymentTypes}"
+                    SelectedItem="{Binding SelectedPaymentType}" />
+                <Button
+                    Text="+" 
+                    Command="{Binding AddPaymentTypeCommand}"
+                    HorizontalOptions="Start" 
+                    Grid.Row="2" Grid.Column="2" />
                 <Label Text="Valor: " VerticalOptions="Center"
-                       Grid.Row="2" HorizontalTextAlignment="End" />
+                       Grid.Row="3" HorizontalTextAlignment="End" />
                 <Entry Placeholder="0,00"
                        MaxLength="12" 
                        Keyboard="Numeric" Text="{Binding EntryValue}"
-                       Grid.Row="2" Grid.Column="1" />
+                       Grid.Row="3" Grid.Column="1" />
                 <Label Text="Descrição: " VerticalOptions="Center"
-                       Grid.Row="3" HorizontalTextAlignment="End" />
+                       Grid.Row="4" HorizontalTextAlignment="End" />
                 <Entry MaxLength="100"
                        Keyboard="Text" Text="{Binding Description}"
                        Placeholder="Descrição"
-                       Grid.Row="3" Grid.Column="1" />
+                       Grid.Row="4" Grid.Column="1" />
                 <Button 
                     Text="Gravar Lançamento"
                     Command="{Binding SaveExpenseCommand}"
                     HorizontalOptions="Fill"
-                    Grid.Row="4" Grid.Column="1" />
+                    Grid.Row="5" Grid.Column="1" />
             </Grid>
 
             <Label Text="{Binding StatusMessage}" />

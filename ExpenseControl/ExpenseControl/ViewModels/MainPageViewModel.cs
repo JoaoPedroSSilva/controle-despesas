@@ -26,6 +26,9 @@ namespace ExpenseControl.ViewModels
         private string entryValue;
 
         [ObservableProperty]
+        private string selectedPaymentType;
+
+        [ObservableProperty]
         private string description;
 
         [ObservableProperty]
@@ -36,6 +39,9 @@ namespace ExpenseControl.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<ExpenseEntry> expenses = new();
+
+        [ObservableProperty]
+        private ObservableCollection<string> paymentTypes = new();
 
         [RelayCommand]
         private async Task AddCategory()
@@ -60,6 +66,30 @@ namespace ExpenseControl.ViewModels
         }
 
         [RelayCommand]
+        private async Task AddPaymentType()
+        {
+            string newPaymentType = await Shell.Current.DisplayPromptAsync("Adicionar forma de pagamento",
+                "Digite a nova forma de pagamento.", "Adicionar", "Cancelar");
+            if (string.IsNullOrWhiteSpace(newPaymentType))
+                return;
+            newPaymentType = newPaymentType.Trim();
+
+            foreach (string type in PaymentTypes)
+            {
+                if (type == newPaymentType)
+                {
+                    await Shell.Current.DisplayAlert("Forma de pagamento já cadastrada!", 
+                        "Nome de forma de pagamento já cadastrada.", "OK");
+                    return;
+                }
+            }
+            PaymentTypes.Add(newPaymentType);
+            SelectedPaymentType = newPaymentType;
+
+            await Shell.Current.DisplayAlert("Forma de pagamento adicionada!", "Nova forma de pagamento cadastrada.", "OK");
+        }
+
+        [RelayCommand]
         private async Task SaveExpense()
         {
             if (string.IsNullOrWhiteSpace(SelectedCategory) ||
@@ -77,7 +107,7 @@ namespace ExpenseControl.ViewModels
             }
 
             Description = Description.Trim();
-            ExpenseEntry expense = new(SelectedDate, SelectedCategory, value, Description);
+            ExpenseEntry expense = new(SelectedDate, SelectedCategory, value, Description, SelectedPaymentType);
             await _repo.AddNewExpense(expense);
             StatusMessage = _repo.StatusMessage;
 
@@ -99,8 +129,12 @@ namespace ExpenseControl.ViewModels
 
         private async void LoadData()
         {
-            var categList = await _repo.GetExpensesCategories();
+            List<string> categList = await _repo.GetExpensesCategories();
             Categories = new ObservableCollection<string>(categList);
+
+            List<string> paymentTypeList = await _repo.GetExpensesPaymentsTypes();
+            PaymentTypes = new ObservableCollection<string>(paymentTypeList);
+
             await LoadLastExpenses();
         }
 
