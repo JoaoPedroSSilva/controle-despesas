@@ -15,10 +15,10 @@
             FontSize="24" 
             HorizontalOptions="Center" />
 
-        <Button Text="Exportar Dados para JSON"
+        <Button Text="Exportar dados em formato JSON"
                 Command="{Binding ExportCommand}" />
 
-        <Button Text="Importar Dados para JSON"
+        <Button Text="Importar dados em formato JSON"
         Command="{Binding ImportCommand}" />
 
         <Label Text="{Binding StatusMessage}"
