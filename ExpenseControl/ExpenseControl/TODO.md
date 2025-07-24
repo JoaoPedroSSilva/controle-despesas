@@ -39,9 +39,9 @@
 
 ## Ajustes Estéticos
 
-- [ ] Corrigir corte de nome das páginas no menu de navegação (Flyout)
-- [ ] Corrigir tema escuro automático no Android apk.
-- [ ] Melhorar adaptação do layout para telas menores (ex. dispositivos Android)
+- [x] Corrigir corte de nome das páginas no menu de navegação (Flyout)
+- [x] Corrigir tema escuro automático no Android apk.
+- [x] Melhorar adaptação do layout para telas menores (ex. dispositivos Android)
 
 ---
 
