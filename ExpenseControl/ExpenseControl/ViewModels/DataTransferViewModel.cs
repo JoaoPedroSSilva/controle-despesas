@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ExpenseControl.Models;
+using ExpenseControl.Services;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using ExpenseControl.Services;
-using ExpenseControl.Models;
-
 
 
 namespace ExpenseControl.ViewModels
@@ -19,7 +19,20 @@ namespace ExpenseControl.ViewModels
         public DataTransferViewModel()
         {
             _repo = App.PersonRepo;
+            LoadAvaibleYears();
         }
+
+        [ObservableProperty]
+        int selectedYear;
+
+        [ObservableProperty]
+        int selectedMonth = DateTime.Now.Month;
+
+        [ObservableProperty]
+        ObservableCollection<int> availableYears = new();
+
+        public ObservableCollection<int> availableMonths { get; } =
+            new ObservableCollection<int>(Enumerable.Range(1, 12));
 
         [ObservableProperty]
         string statusMessage;
@@ -29,7 +42,7 @@ namespace ExpenseControl.ViewModels
         {
             try
             {
-                string fileName = $"despesas_exportadas_{DateTime.Now:yyyyMMdd+HHmmss}.json";
+                string fileName = $"despesas_{SelectedYear}_{SelectedMonth}_{DateTime.Now:yyyyMMdd+HHmmss}.json";
                 string filePath;
 
 #if ANDROID
@@ -43,7 +56,7 @@ namespace ExpenseControl.ViewModels
                 filePath = Path.Combine(FileSystem.AppDataDirectory, fileName);
 #endif
 
-                await _repo.ExportExpensesToJsonAsync(filePath);
+                await _repo.ExportExpensesToJsonAsync(filePath, SelectedMonth, SelectedYear);
                 StatusMessage = $"Exportado para: {filePath}";
 
 #if ANDROID
@@ -92,6 +105,14 @@ namespace ExpenseControl.ViewModels
 #else
             StatusMessage = "Importação só está disponível no Windows por enquanto.";
 #endif
+        }
+
+        private async void LoadAvaibleYears()
+        {
+            List<ExpenseEntry> allExpenses = await _repo.GetAllExpenses();
+            var years = allExpenses.Select(e => e.Date.Year).Distinct().OrderByDescending(y => y);
+            AvailableYears = new ObservableCollection<int>(years);
+            SelectedYear = AvailableYears.FirstOrDefault();
         }
     }
 }

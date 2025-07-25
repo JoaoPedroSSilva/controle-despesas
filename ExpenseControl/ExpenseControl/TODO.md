@@ -12,7 +12,7 @@
 
 ### 🔄 Filtro na exportação de dados
 
-- [ ] Exportar por mês específico
+- [x] Exportar por mês específico
 - [ ] Exportar por intervalo de datas personalizado
 - [ ] Permitir selecionar categorias específicas para exportação
 
@@ -51,3 +51,7 @@
 - [ ] Adicionar instruções de build e publicação para Android e Windows
 
 ---
+## Build Android (APK)
+
+```bash
+dotnet publish -f:net8.0-android -c Release -p:AndroidPackageFormat=apk

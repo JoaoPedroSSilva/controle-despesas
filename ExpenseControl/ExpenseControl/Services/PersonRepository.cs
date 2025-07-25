@@ -153,14 +153,19 @@ namespace ExpenseControl.Services
             }
         }
 
-        public async Task ExportExpensesToJsonAsync(string filePath)
+        public async Task ExportExpensesToJsonAsync(string filePath, int month, int year)
         {
             try
             {
                 await Init();
-                List<ExpenseEntry> allExpenses = await conn.Table<ExpenseEntry>().ToListAsync();
+                List<ExpenseEntry> exportExpenses = await GetMonthExpenses(month, year);
 
-                string json = JsonSerializer.Serialize(allExpenses, new JsonSerializerOptions
+                if (exportExpenses.Count == 0)
+                {
+                    throw new InvalidOperationException($"Não há despesas para serem exportadas do mês {month} de {year}");
+                }
+
+                string json = JsonSerializer.Serialize(exportExpenses, new JsonSerializerOptions
                 {
                     WriteIndented = true,
                 });
@@ -171,6 +176,7 @@ namespace ExpenseControl.Services
             catch (Exception ex)
             {
                 StatusMessage = $"Erro ao exportar dados: {ex.Message}";
+                throw new Exception(ex.Message);
             }
         }
 

@@ -21,7 +21,7 @@ namespace ExpenseControl.ViewModels
         string statusMessage;
 
         [ObservableProperty]
-        int selectedYear = DateTime.Now.Year;
+        int selectedYear;
 
         [ObservableProperty]
         int selectedMonth = DateTime.Now.Month;
@@ -126,6 +126,7 @@ namespace ExpenseControl.ViewModels
                 List<ExpenseEntry> expenses = await _repo.GetAllExpenses();
                 var years = expenses.Select(e => e.Date.Year).Distinct().OrderByDescending(y => y);
                 AvailableYears = new ObservableCollection<int>(years);
+                SelectedYear = AvailableYears.FirstOrDefault();
             }
             catch (Exception ex)
             {
