@@ -59,6 +59,7 @@ namespace ExpenseControl.ViewModels
         {
             try
             {
+                TotalExpense = 0.0;
                 List<ExpenseEntry> expenses = await _repo.GetAllExpenses();
 
                 List<ExpenseEntry> filtered = expenses
@@ -100,7 +101,6 @@ namespace ExpenseControl.ViewModels
                     .ToList();
 
                 var max = chartGrouped.Max(c => c.TotalValue);
-                TotalExpense = 0.0;
 
                 foreach (var item in chartGrouped)
                 {

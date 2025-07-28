@@ -17,7 +17,7 @@
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Picker Title="Ano" ItemsSource="{Binding AvailableYears}" SelectedItem="{Binding SelectedYear}" />
-            <Picker Title="Mês" ItemsSource="{Binding availableMonths}" SelectedItem="{Binding SelectedMonth}"/>
+            <Picker Title="Mês" ItemsSource="{Binding AvailableMonths}" SelectedItem="{Binding SelectedMonth}"/>
         </HorizontalStackLayout>
 
         <Button Text="Exportar dados em formato JSON"

@@ -20,7 +20,7 @@
 
     <Shell.ItemTemplate>
         <DataTemplate>
-            <Grid ColumnDefinitions=".30*, .70*" RowDefinitions="*,*,*" RowSpacing="10" ColumnSpacing="10" Padding="10">
+            <Grid ColumnDefinitions="*" RowDefinitions="*,*,*" Padding="10">
                 <HorizontalStackLayout Grid.Row="0" Spacing="10">
                     <Image Source="{Binding FlyoutIcon}" WidthRequest="50" HeightRequest="50"/>
                     <Label Text="{Binding Title}" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
