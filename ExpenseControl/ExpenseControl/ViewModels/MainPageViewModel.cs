@@ -130,10 +130,10 @@ namespace ExpenseControl.ViewModels
         private async void LoadData()
         {
             List<string> categList = await _repo.GetExpensesCategories();
-            Categories = new ObservableCollection<string>(categList);
+            Categories = new ObservableCollection<string>(categList.OrderBy(c => c));
 
             List<string> paymentTypeList = await _repo.GetExpensesPaymentsTypes();
-            PaymentTypes = new ObservableCollection<string>(paymentTypeList);
+            PaymentTypes = new ObservableCollection<string>(paymentTypeList.OrderBy(p => p));
 
             await LoadLastExpenses();
         }
