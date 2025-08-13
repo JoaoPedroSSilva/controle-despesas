@@ -43,14 +43,11 @@ namespace ExpenseControl.ViewModels
 
         public double MaxChartValue => ChartData.Any() ? ChartData.Max(c => c.TotalValue) : 1;
 
-        partial void OnSelectedYearChanged(int value) => LoadConsolidatedExpensesCommand.Execute(null);
-        partial void OnSelectedMonthChanged(int value) => LoadConsolidatedExpensesCommand.Execute(null);
 
         [RelayCommand]
         public async Task InitializeAsync()
         {
             await LoadAvaibleYears();
-            await LoadConsolidatedExpenses();
         }
 
 
@@ -100,9 +97,9 @@ namespace ExpenseControl.ViewModels
                     .OrderByDescending(c => c.TotalValue)
                     .ToList();
 
-                var max = chartGrouped.Max(c => c.TotalValue);
+                double max = chartGrouped.Max(c => c.TotalValue);
 
-                foreach (var item in chartGrouped)
+                foreach (ConsolidatedExpense item in chartGrouped)
                 {
                     item.MaxChartValue = max;
                     TotalExpense += item.TotalValue;

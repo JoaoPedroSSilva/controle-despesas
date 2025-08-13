@@ -35,6 +35,8 @@
                         <Binding StringFormat="{}{0:D2}" />
                     </Picker.ItemDisplayBinding>
                 </Picker>
+
+                <Button Text="Consolidar" Command="{Binding LoadConsolidatedExpensesCommand}" HorizontalOptions="Center" Margin="0,10,0,0"/>
             </FlexLayout>
 
             <Label Text="{Binding StatusMessage}"
