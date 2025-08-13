@@ -19,7 +19,7 @@
 
 ### 📊 Otimizar visualização de categorias na consolidação
 
-- [ ] Botão para consolidar despesas após selecionar os filtros
+- [x] Botão para consolidar despesas após selecionar os filtros
 - [x] Zerar despesas ao selecionar período sem despesas
 - [ ] Agrupar categorias com baixo valor individual em "Outras despesas"
 - [ ] Exibir individualmente apenas as principais categorias
@@ -37,6 +37,12 @@
 
 - [ ] Incluir campo para tipo de pagamento: cartão de crédito, dinheiro ou saldo bancário
 - [ ] Permitir visualização e filtragem por tipo de pagamento
+
+---
+
+## Ajustes Técnicos
+
+- [ ] Ajustar tela de exportação / importação de despesas, seletor do mês não funcionando corretamente
 
 ---
 
