@@ -14,7 +14,6 @@ namespace ExpenseControl.ViewModels
         {
             _repo = App.PersonRepo;
             LoadAvaibleYears();
-            LoadConsolidatedExpenses();
         }
 
         [ObservableProperty]
