@@ -18,13 +18,13 @@ namespace ExpenseControl.ViewModels
         public ExpenseListViewModel()
         {
             _repo = App.PersonRepo;
-            LoadAvaibleYears();
-            LoadAvaibleCategories();
-            LoadExpenses();
         }
 
         [ObservableProperty]
-        int selectedYear;
+        string statusMessage;
+
+        [ObservableProperty]
+        int selectedYear = DateTime.Now.Year;
 
         [ObservableProperty]
         int selectedMonth = DateTime.Now.Month;
@@ -36,19 +36,25 @@ namespace ExpenseControl.ViewModels
         string? selectedCategory;
 
         [ObservableProperty]
+        string? selectedPaymentType;
+
+        [ObservableProperty]
         double? minValue;
 
         [ObservableProperty]
         double? maxValue;
 
-        [ObservableProperty]
-        ObservableCollection<int> availableYears = new();
+        public ObservableCollection<int> availableYears { get; } =
+            new ObservableCollection<int>(Enumerable.Range(DateTime.Now.Year -6, 8));
 
         public ObservableCollection<int> availableMonths { get; } = 
             new ObservableCollection<int>(Enumerable.Range(1, 12));
 
         [ObservableProperty]
         ObservableCollection<string> availableCategories = new();
+
+        [ObservableProperty]
+        ObservableCollection<string> availablePaymentTypes = new();
 
         [ObservableProperty]
         ObservableCollection<ExpenseEntry> expenses = new();
@@ -61,9 +67,9 @@ namespace ExpenseControl.ViewModels
         {
             try
             {
-                List<ExpenseEntry> allExpenses = await _repo.GetAllExpenses();
+                List<ExpenseEntry> expenses = await _repo.GetMonthExpenses(SelectedMonth, SelectedYear);
 
-                List<ExpenseEntry> filtered = allExpenses.Where(e =>
+                List<ExpenseEntry> filtered = expenses.Where(e =>
                     (e.Date.Year == SelectedYear) &&
                     (e.Date.Month == SelectedMonth) &&
                     (string.IsNullOrEmpty(SearchDescription) ||
@@ -73,6 +79,14 @@ namespace ExpenseControl.ViewModels
                     (!MaxValue.HasValue || e.Value <= MaxValue))
                     .OrderByDescending(e => e.Date).ToList();
 
+                if (!filtered.Any())
+                {
+                    Expenses.Clear();
+                    TotalSpent = 0.0;
+                    StatusMessage = "Nenhuma despesa encontrada para o período selecionado.";
+                    return;
+                }
+
                 Expenses = new ObservableCollection<ExpenseEntry>(filtered);
                 TotalSpent = filtered.Sum(e => e.Value);
             }
@@ -80,6 +94,9 @@ namespace ExpenseControl.ViewModels
             {
                 await Shell.Current.DisplayAlert("Erro", $"Erro ao carregar despesas: {ex.Message}", "OK");
             }
+
+            await LoadAvaibleCategories();            
+            await LoadAvaiblePaymentTypes();
         }
 
         [RelayCommand]
@@ -97,23 +114,20 @@ namespace ExpenseControl.ViewModels
             await Shell.Current.DisplayAlert("Sucesso", "Lançamento excluído com sucesso.", "Ok");
         }
 
-        private async void LoadAvaibleYears()
+        private async Task LoadAvaibleCategories()
         {
-            List<ExpenseEntry> allExpenses = await _repo.GetAllExpenses();
-            var years = allExpenses.Select(e => e.Date.Year).Distinct().OrderByDescending(y => y);
-            AvailableYears = new ObservableCollection<int>(years);
-            SelectedYear = AvailableYears.FirstOrDefault();
-        }
-
-        private async void LoadAvaibleCategories()
-        {
-            List<ExpenseEntry> allExpenses = await _repo.GetAllExpenses();
-            var categories = allExpenses.Select(e => e.Category).Distinct().OrderBy(c => c).ToList();
-
+            var categories = await _repo.GetCategoriesByPeriod(SelectedMonth, SelectedYear);
             categories.Insert(0, "Todas");
-
             AvailableCategories = new ObservableCollection<string>(categories);
             SelectedCategory = "Todas";
+        }
+
+        private async Task LoadAvaiblePaymentTypes()
+        {
+            var paymentTypes = await _repo.GetPaymentTypesByPeriod(SelectedMonth, SelectedYear);
+            paymentTypes.Insert(0, "Todas");
+            AvailablePaymentTypes = new ObservableCollection<string>(paymentTypes);
+            SelectedPaymentType = "Todas";
         }
     }
 }

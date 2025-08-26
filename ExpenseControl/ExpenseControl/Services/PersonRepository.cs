@@ -212,12 +212,12 @@ namespace ExpenseControl.Services
             }
         }
 
-        internal async Task<List<string>> GetExpensesPaymentsTypes()
+        public async Task<List<string>> GetExpensesPaymentsTypes()
         {
             try
             {
                 await Init();
-                var paymentsTypes = await conn.QueryAsync<ExpenseEntry>("SELECT DISTINCT PaymentType FROM expenses");
+                List<ExpenseEntry> paymentsTypes = await conn.QueryAsync<ExpenseEntry>("SELECT DISTINCT PaymentType FROM expenses");
                 return paymentsTypes.Select(x => x.PaymentType).ToList();
             }
             catch (Exception ex)
@@ -231,6 +231,24 @@ namespace ExpenseControl.Services
                 "Débito",
                 "Dinheiro"
             };
+        }
+
+        public async Task<List<string>> GetCategoriesByPeriod(int month, int year)
+        {
+            List<ExpenseEntry> expenses = await GetMonthExpenses(month, year);
+            return expenses.Select(e => e.Category)
+                           .Distinct()
+                           .OrderBy(c => c)
+                           .ToList();
+        }
+
+        public async Task<List<string>> GetPaymentTypesByPeriod(int month, int year)
+        {
+            List<ExpenseEntry> expenses = await GetMonthExpenses(month, year);
+            return expenses.Select(e => e.PaymentType)
+                           .Distinct()
+                           .OrderBy(p => p)
+                           .ToList();
         }
     }
 }

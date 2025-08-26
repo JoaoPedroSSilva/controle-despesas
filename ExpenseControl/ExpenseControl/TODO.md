@@ -35,8 +35,8 @@
 
 ### 💳 Separar despesas por forma de pagamento
 
-- [ ] Incluir campo para tipo de pagamento: cartão de crédito, dinheiro ou saldo bancário
-- [ ] Permitir visualização e filtragem por tipo de pagamento
+- [x] Incluir campo para tipo de pagamento: cartão de crédito, dinheiro ou saldo bancário
+- [x] Permitir visualização e filtragem por tipo de pagamento
 
 ---
 
