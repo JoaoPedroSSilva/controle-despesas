@@ -42,7 +42,8 @@
 
 ## Ajustes Técnicos
 
-- [x] Ajustar tela de exportação / importação de despesas, seletor do mês não funcionando corretamente
+- [x] Ajustar tela de exportação / importação de despesas, seletor do mês não funcionando corretamente.
+- [ ] Ajustar tela de listagem de despesas, campos de filtro de forma de pagamento e categoria não estão funcionando como esperado.
 
 ---
 
