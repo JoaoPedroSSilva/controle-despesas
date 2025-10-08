@@ -75,6 +75,7 @@ namespace ExpenseControl.ViewModels
                     (string.IsNullOrEmpty(SearchDescription) ||
                     e.Description.Contains(SearchDescription, StringComparison.OrdinalIgnoreCase)) &&
                     (SelectedCategory == "Todas" || string.IsNullOrEmpty(SelectedCategory) || e.Category == SelectedCategory) &&
+                    (SelectedPaymentType == "Todas" || string.IsNullOrEmpty(SelectedPaymentType) || e.PaymentType == SelectedPaymentType) &&
                     (!MinValue.HasValue || e.Value >= MinValue) &&
                     (!MaxValue.HasValue || e.Value <= MaxValue))
                     .OrderByDescending(e => e.Date).ToList();
@@ -83,7 +84,7 @@ namespace ExpenseControl.ViewModels
                 {
                     Expenses.Clear();
                     TotalSpent = 0.0;
-                    StatusMessage = "Nenhuma despesa encontrada para o período selecionado.";
+                    StatusMessage = "Nenhuma despesa encontrada para os filtros selecionados.";
                     return;
                 }
 
@@ -94,10 +95,8 @@ namespace ExpenseControl.ViewModels
             {
                 await Shell.Current.DisplayAlert("Erro", $"Erro ao carregar despesas: {ex.Message}", "OK");
             }
-
-            await LoadAvaibleCategories();            
-            await LoadAvaiblePaymentTypes();
         }
+
 
         [RelayCommand]
         private async Task DeleteExpense(ExpenseEntry expense)
@@ -114,19 +113,27 @@ namespace ExpenseControl.ViewModels
             await Shell.Current.DisplayAlert("Sucesso", "Lançamento excluído com sucesso.", "Ok");
         }
 
-        private async Task LoadAvaibleCategories()
-        {
-            var categories = await _repo.GetCategoriesByPeriod(SelectedMonth, SelectedYear);
-            categories.Insert(0, "Todas");
-            AvailableCategories = new ObservableCollection<string>(categories);
-            SelectedCategory = "Todas";
-        }
+        partial void OnSelectedYearChanged(int value) => _ = LoadFiltersAsync();
+        partial void OnSelectedMonthChanged(int value) => _ = LoadFiltersAsync();
 
-        private async Task LoadAvaiblePaymentTypes()
+
+        private async Task LoadFiltersAsync()
         {
-            var paymentTypes = await _repo.GetPaymentTypesByPeriod(SelectedMonth, SelectedYear);
+            Task<List<string>> categoriesTask = _repo.GetCategoriesByPeriod(SelectedMonth, SelectedYear);
+            Task<List<string>> paymentTypesTask = _repo.GetPaymentTypesByPeriod(SelectedMonth, SelectedYear);
+
+            await Task.WhenAll(categoriesTask, paymentTypesTask);
+
+            List<string> categories = await categoriesTask;
+            List<string> paymentTypes = await paymentTypesTask;
+
+            categories.Insert(0, "Todas");
             paymentTypes.Insert(0, "Todas");
+
+            AvailableCategories = new ObservableCollection<string>(categories);
             AvailablePaymentTypes = new ObservableCollection<string>(paymentTypes);
+
+            SelectedCategory = "Todas";
             SelectedPaymentType = "Todas";
         }
     }
