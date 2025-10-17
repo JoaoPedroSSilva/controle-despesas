@@ -66,6 +66,7 @@ namespace ExpenseControl.ViewModels
         [RelayCommand]
         private async Task LoadExpenses()
         {
+            StatusMessage = string.Empty;
             try
             {
                 List<ExpenseEntry> expenses = await _repo.GetMonthExpenses(SelectedMonth, SelectedYear);
@@ -136,6 +137,8 @@ namespace ExpenseControl.ViewModels
 
             SelectedCategory = "Todas";
             SelectedPaymentType = "Todas";
+
+            StatusMessage = string.Empty;
         }
     }
 }
