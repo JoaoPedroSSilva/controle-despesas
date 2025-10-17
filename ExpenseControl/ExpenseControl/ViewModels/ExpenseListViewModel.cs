@@ -18,6 +18,7 @@ namespace ExpenseControl.ViewModels
         public ExpenseListViewModel()
         {
             _repo = App.PersonRepo;
+            _ = LoadFiltersAsync();
         }
 
         [ObservableProperty]

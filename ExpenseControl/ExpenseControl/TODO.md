@@ -43,13 +43,13 @@
 ## Ajustes Técnicos
 
 - [x] Ajustar tela de exportação / importação de despesas, seletor do mês não funcionando corretamente.
-- [ ] Ajustar tela de listagem de despesas, campos de filtro de forma de pagamento e categoria não estão funcionando como esperado.
+- [x] Ajustar tela de listagem de despesas, campos de filtro de forma de pagamento e categoria não estão funcionando como esperado.
 
 ---
 
 ## Ajustes Estéticos
 
-- [ ] Alterar ícone de identidade do aplicativo
+- [x] Alterar ícone de identidade do aplicativo
 - [x] Corrigir corte de nome das páginas no menu de navegação (Flyout)
 - [x] Corrigir tema escuro automático no Android apk.
 - [x] Melhorar adaptação do layout para telas menores (ex. dispositivos Android)
