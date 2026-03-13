@@ -38,7 +38,7 @@ namespace ExpenseControl.ViewModels
         string statusMessage;
 
         [RelayCommand]
-        public async Task Export()
+        public async Task ExportJson()
         {
             try
             {
@@ -57,6 +57,42 @@ namespace ExpenseControl.ViewModels
 #endif
 
                 await _repo.ExportExpensesToJsonAsync(filePath, SelectedMonth, SelectedYear);
+                StatusMessage = $"Exportado para: {filePath}";
+
+#if ANDROID
+                await Share.RequestAsync(new ShareFileRequest
+                {
+                    Title = "Compartilhar despesas exportadas",
+                    File = new ShareFile(filePath)
+                });
+#endif
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Erro na exportação: {ex.Message}";
+            }
+        }
+
+        [RelayCommand]
+        public async Task ExportCsv()
+        {
+            try
+            {
+                string fileName = $"despesas_{SelectedYear}_{SelectedMonth}_{DateTime.Now:yyyyMMdd+HHmmss}.csv";
+                string filePath;
+
+#if ANDROID
+                string downloadsPath = Android.OS.Environment.GetExternalStoragePublicDirectory(
+                    Android.OS.Environment.DirectoryDownloads).AbsolutePath;
+                filePath = Path.Combine(downloadsPath, fileName);
+#elif WINDOWS
+                string downloadsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                filePath = Path.Combine(downloadsPath, fileName);
+#else
+                filePath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+#endif
+
+                await _repo.ExportExpensesToCsvAsync(filePath, SelectedMonth, SelectedYear);
                 StatusMessage = $"Exportado para: {filePath}";
 
 #if ANDROID

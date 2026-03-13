@@ -20,11 +20,14 @@
             <Picker Title="Mês" ItemsSource="{Binding availableMonths}" SelectedItem="{Binding SelectedMonth}"/>
         </HorizontalStackLayout>
 
-        <Button Text="Exportar dados em formato JSON"
-                Command="{Binding ExportCommand}" />
+        <Button Text="Exportar dados em formato .JSON"
+                Command="{Binding ExportJsonCommand}" />
+
+        <Button Text="Exportar dados em formato .CSV"
+                Command="{Binding ExportCsvCommand}" />
 
         <Button Text="Importar dados em formato JSON"
-        Command="{Binding ImportCommand}" />
+                Command="{Binding ImportCommand}" />
 
         <Label Text="{Binding StatusMessage}"
                TextColor="DarkGreen"

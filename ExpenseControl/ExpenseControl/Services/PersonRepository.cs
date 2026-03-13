@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System.Text.Json;
 using ExpenseControl.Models;
+using System.Text;
 
 namespace ExpenseControl.Services
 {
@@ -171,6 +172,43 @@ namespace ExpenseControl.Services
                 });
 
                 File.WriteAllText(filePath, json);
+                StatusMessage = $"Dados exportados para: {filePath}";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Erro ao exportar dados: {ex.Message}";
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task ExportExpensesToCsvAsync(string filePath, int month, int year)
+        {
+            try
+            {
+                await Init();
+                List<ExpenseEntry> exportExpenses = await GetMonthExpenses(month, year);
+
+                if (exportExpenses.Count == 0)
+                {
+                    throw new InvalidOperationException($"Não há despesas para serem exportadas do mês {month} de {year}");
+                }
+
+                StringBuilder csv = new StringBuilder();
+
+                csv.AppendLine("Data;Categoria;FormaPagamento;Valor;Descricao");
+
+                foreach (var expense in exportExpenses)
+                {
+                    string line = $"{expense.Date:yyyy-MM-dd};" +
+                        $"{expense.Category};" +
+                        $"{expense.PaymentType};" +
+                        $"{expense.Value};" +
+                        $"{expense.Description}";
+
+                    csv.AppendLine(line);
+                }
+
+                await File.WriteAllTextAsync(filePath, csv.ToString());
+
                 StatusMessage = $"Dados exportados para: {filePath}";
             }
             catch (Exception ex)
