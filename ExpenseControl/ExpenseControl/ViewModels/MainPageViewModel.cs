@@ -142,7 +142,7 @@ namespace ExpenseControl.ViewModels
         {
             int numberOfExpenses = 4;
             var list = await _repo.GetLastsExpenses(numberOfExpenses);
-            Expenses = new ObservableCollection<ExpenseEntry>(list.OrderByDescending(e => e.Date));
+            Expenses = new ObservableCollection<ExpenseEntry>(list.OrderByDescending(e => e.Id));
         }
     }
 }
