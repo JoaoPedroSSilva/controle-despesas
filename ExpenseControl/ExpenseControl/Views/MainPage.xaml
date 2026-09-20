@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ExpenseControl.ViewModels"
+             xmlns:behaviors="clr-namespace:ExpenseControl.Converters"
              x:Class="ExpenseControl.MainPage">
 
     <ContentPage.BindingContext>
@@ -58,7 +59,11 @@
                 <Entry Placeholder="0,00"
                        MaxLength="12" 
                        Keyboard="Numeric" Text="{Binding EntryValue}"
-                       Grid.Row="3" Grid.Column="1" />
+                       Grid.Row="3" Grid.Column="1" >
+                    <Entry.Behaviors>
+                        <behaviors:CurrencyValidationBehavior />
+                    </Entry.Behaviors>
+                </Entry>
                 <Label Text="Descrição: " VerticalOptions="Center"
                        Grid.Row="4" HorizontalTextAlignment="End" />
                 <Entry MaxLength="100"
